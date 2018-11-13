@@ -253,8 +253,8 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             aggregate.enableReprojectionForVolumetrics = srcFrameSettings.enableReprojectionForVolumetrics;
 
             // TODO: Add support of volumetric in planar reflection
-            if (camera.cameraType == CameraType.Reflection)
-                aggregate.enableVolumetrics = false;
+          //  if (camera.cameraType == CameraType.Reflection)
+           //     aggregate.enableVolumetrics = false;
 
             aggregate.enableLightLayers = srcFrameSettings.enableLightLayers && renderPipelineSettings.supportLightLayers;
 

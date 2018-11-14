@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [5.1.0-preview] - 2018-10-30
 ### Added
 - You can now show and hide the Main Preview and the Blackboard from the toolbar.
+- The foldouts on the Lightweight Asset inspector UI will now remember their state. 
 
 ### Changed
 - Moved `NormalBlendRNM` node to a dropdown option on `Normal Blend` node.

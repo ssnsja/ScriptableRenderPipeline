@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fixed d3d debug layer warning
 - Fixed PCSS sampling quality
 - Fixed the Subsurface and transmission material feature enabling for fabric shader
+- Fixed HDRenderPipelineAsset's FrameSettings not showing the one selected in the enum at inspector opening.
 
 ### Changed
 - Renamed "Line" shaped lights to "Tube" light

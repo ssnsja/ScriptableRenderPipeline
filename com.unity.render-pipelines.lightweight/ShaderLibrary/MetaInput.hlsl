@@ -51,7 +51,7 @@ float4 MetaVertexPosition(float3 positionOS, float2 uvLM, float2 uvDLM, float4 l
         // so use it in a very dummy way
         positionOS.z = positionOS.z > 0 ? 1.0e-4f : 0.0f;
     }
-    return TransformWorldToHClip(positionOS.xyz); // Need to transfer from world to clip compared to legacy
+    return TransformWorldToHClip(positionOS.xyz);
 }
 
 half4 MetaFragment(MetaInput input)

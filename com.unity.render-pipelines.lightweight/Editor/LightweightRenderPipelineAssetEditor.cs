@@ -46,22 +46,19 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
             // Advanced settings
             public static GUIContent dynamicBatching = EditorGUIUtility.TrTextContent("Dynamic Batching", "If enabled the pipeline will batch drawcalls with few triangles together by copying their vertex buffers into a shared buffer on a per-frame basis.");
             public static GUIContent mixedLightingSupportLabel = EditorGUIUtility.TrTextContent("Mixed Lighting", "Support for mixed light mode.");
-
             public static GUIContent shaderVariantLogLevel = EditorGUIUtility.TrTextContent("Shader Variant Log Level", "Controls the level logging in of shader variants information is outputted when a build is performed. Information will appear in the Unity console when the build finishes.");
 
             // Dropdown menu options
             public static string[] mainLightOptions = { "Disabled", "Per Pixel" };
-
             public static string[] shadowCascadeOptions = {"No Cascades", "Two Cascades", "Four Cascades"};
             public static string[] opaqueDownsamplingOptions = {"None", "2x (Bilinear)", "4x (Box)", "4x (Bilinear)"};
-
         }
 
-        bool m_GeneralSettingsFoldout = false;
-        bool m_QualitySettingsFoldout = false;
-        bool m_LightingSettingsFoldout = false;
-        bool m_ShadowSettingsFoldout = false;
-        bool m_AdvancedSettingsFoldout = false;
+        LightweightRenderPipelineEditorUtils.SavedBool m_GeneralSettingsFoldout;
+        LightweightRenderPipelineEditorUtils.SavedBool m_QualitySettingsFoldout;
+        LightweightRenderPipelineEditorUtils.SavedBool m_LightingSettingsFoldout;
+        LightweightRenderPipelineEditorUtils.SavedBool m_ShadowSettingsFoldout;
+        LightweightRenderPipelineEditorUtils.SavedBool m_AdvancedSettingsFoldout;
 
         SerializedProperty m_RequireDepthTextureProp;
         SerializedProperty m_RequireOpaqueTextureProp;
@@ -111,6 +108,12 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
 
         void OnEnable()
         {
+            m_GeneralSettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.GeneralSettingsFoldout", false);
+            m_QualitySettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.QualitySettingsFoldout", false);
+            m_LightingSettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.LightingSettingsFoldout", false);
+            m_ShadowSettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.ShadowSettingsFoldout", false);
+            m_AdvancedSettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.AdvancedSettingsFoldout", false);
+
             m_RequireDepthTextureProp = serializedObject.FindProperty("m_RequireDepthTexture");
             m_RequireOpaqueTextureProp = serializedObject.FindProperty("m_RequireOpaqueTexture");
             m_OpaqueDownsamplingProp = serializedObject.FindProperty("m_OpaqueDownsampling");
@@ -145,8 +148,8 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
 
         void DrawGeneralSettings()
         {
-            m_GeneralSettingsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(m_GeneralSettingsFoldout, Styles.generalSettingsText);
-            if (m_GeneralSettingsFoldout)
+            m_GeneralSettingsFoldout.value = EditorGUILayout.BeginFoldoutHeaderGroup(m_GeneralSettingsFoldout.value, Styles.generalSettingsText);
+            if (m_GeneralSettingsFoldout.value)
             {
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(m_RequireDepthTextureProp, Styles.requireDepthTextureText);
@@ -165,8 +168,8 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
 
         void DrawQualitySettings()
         {
-            m_QualitySettingsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(m_QualitySettingsFoldout, Styles.qualitySettingsText);
-            if (m_QualitySettingsFoldout)
+            m_QualitySettingsFoldout.value = EditorGUILayout.BeginFoldoutHeaderGroup(m_QualitySettingsFoldout.value, Styles.qualitySettingsText);
+            if (m_QualitySettingsFoldout.value)
             {
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(m_HDR, Styles.hdrText);
@@ -183,8 +186,8 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
 
         void DrawLightingSettings()
         {
-            m_LightingSettingsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(m_LightingSettingsFoldout, Styles.lightingSettingsText);
-            if (m_LightingSettingsFoldout)
+            m_LightingSettingsFoldout.value = EditorGUILayout.BeginFoldoutHeaderGroup(m_LightingSettingsFoldout.value, Styles.lightingSettingsText);
+            if (m_LightingSettingsFoldout.value)
             {
                 EditorGUI.indentLevel++;
 
@@ -240,8 +243,8 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
 
         void DrawShadowSettings()
         {
-            m_ShadowSettingsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(m_ShadowSettingsFoldout, Styles.shadowSettingsText);
-            if (m_ShadowSettingsFoldout)
+            m_ShadowSettingsFoldout.value = EditorGUILayout.BeginFoldoutHeaderGroup(m_ShadowSettingsFoldout.value, Styles.shadowSettingsText);
+            if (m_ShadowSettingsFoldout.value)
             {
                 EditorGUI.indentLevel++;
                 m_ShadowDistanceProp.floatValue = Mathf.Max(0.0f, EditorGUILayout.FloatField(Styles.shadowDistanceText, m_ShadowDistanceProp.floatValue));
@@ -265,8 +268,8 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
 
         void DrawAdvancedSettings()
         {
-            m_AdvancedSettingsFoldout = EditorGUILayout.BeginFoldoutHeaderGroup(m_AdvancedSettingsFoldout, Styles.advancedSettingsText);
-            if (m_AdvancedSettingsFoldout)
+            m_AdvancedSettingsFoldout.value = EditorGUILayout.BeginFoldoutHeaderGroup(m_AdvancedSettingsFoldout.value, Styles.advancedSettingsText);
+            if (m_AdvancedSettingsFoldout.value)
             {
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(m_SupportsDynamicBatching, Styles.dynamicBatching);

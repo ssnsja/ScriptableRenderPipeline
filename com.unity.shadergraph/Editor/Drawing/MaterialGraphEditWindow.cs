@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using UnityEditor.Experimental.UIElements;
 using UnityEngine;
 using UnityEditor.Graphing;
 using UnityEditor.Graphing.Util;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
-using Edge = UnityEditor.Experimental.UIElements.GraphView.Edge;
-using UnityEditor.Experimental.UIElements.GraphView;
-using UnityEngine.Experimental.UIElements;
 using UnityEngine.Rendering;
+
+using UnityEditor.UIElements;
+using Edge = UnityEditor.Experimental.GraphView.Edge;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine.UIElements;
 
 namespace UnityEditor.ShaderGraph.Drawing
 {
@@ -61,7 +62,7 @@ namespace UnityEditor.ShaderGraph.Drawing
                     m_GraphEditorView.showInProjectRequested += PingAsset;
                     m_GraphEditorView.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
                     m_FrameAllAfterLayout = true;
-                    this.GetRootVisualContainer().Add(graphEditorView);
+                    this.rootVisualElement.Add(graphEditorView);
                 }
             }
         }
@@ -134,7 +135,7 @@ namespace UnityEditor.ShaderGraph.Drawing
                     var asset = AssetDatabase.LoadAssetAtPath<Object>(AssetDatabase.GUIDToAssetPath(selectedGuid));
                     graphEditorView = new GraphEditorView(this, materialGraph, messageManager)
                     {
-                        persistenceKey = selectedGuid,
+                        viewDataKey = selectedGuid,
                         assetName = asset.name.Split('/').Last()
                     };
                     m_ColorSpace = PlayerSettings.colorSpace;
@@ -519,7 +520,7 @@ namespace UnityEditor.ShaderGraph.Drawing
 
                 graphEditorView = new GraphEditorView(this, m_GraphObject.graph as AbstractMaterialGraph, messageManager)
                 {
-                    persistenceKey = selectedGuid,
+                    viewDataKey = selectedGuid,
                     assetName = asset.name.Split('/').Last()
                 };
 

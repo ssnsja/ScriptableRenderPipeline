@@ -75,12 +75,12 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                 return;
             }
 
-            var hdPipeline = RenderPipelineManager.currentPipeline as HDRenderPipeline;
-            if (hdPipeline == null)
+            if (!(RenderPipelineManager.currentPipeline is HDRenderPipeline hdPipeline))
             {
                 Debug.LogWarning("HDBakedReflectionSystem work with HDRP, " +
                     "please switch your render pipeline or use another reflection system");
                 handle.ExitStage((int)BakingStages.ReflectionProbes);
+                handle.SetIsDone(true);
                 return;
             }
 

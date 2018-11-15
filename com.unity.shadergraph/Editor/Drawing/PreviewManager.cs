@@ -13,7 +13,7 @@ using Object = UnityEngine.Object;
 
 namespace UnityEditor.ShaderGraph.Drawing
 {
-    public class PreviewManager : IDisposable
+    class PreviewManager : IDisposable
     {
         AbstractMaterialGraph m_Graph;
         MessageManager m_Messenger;
@@ -634,9 +634,9 @@ Shader ""hidden/preview""
         }
     }
 
-    public delegate void OnPreviewChanged();
+    delegate void OnPreviewChanged();
 
-    public class PreviewShaderData
+    class PreviewShaderData
     {
         public INode node { get; set; }
         public Shader shader { get; set; }
@@ -644,7 +644,7 @@ Shader ""hidden/preview""
         public bool hasError { get; set; }
     }
 
-    public class PreviewRenderData
+    class PreviewRenderData
     {
         public PreviewShaderData shaderData { get; set; }
         public RenderTexture renderTexture { get; set; }

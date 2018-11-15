@@ -31,7 +31,7 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
             public static int _ScaledScreenParams;
         }
 
-        
+        public const string name = "LightweightPipeline";
 
         const string k_RenderCameraTag = "Render Camera";
 

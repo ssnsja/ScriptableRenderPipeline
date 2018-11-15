@@ -835,7 +835,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 // Add tags at the SubShader level
                 {
                     var tagsVisitor = new ShaderStringBuilder();
-                    materialTags.GetTags(tagsVisitor);
+                    materialTags.GetTags(tagsVisitor, HDRenderPipeline.name);
                     subShader.AddShaderChunk(tagsVisitor.ToString(), false);
                 }
 

@@ -9,6 +9,7 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
         ParticlesLit,
         ParticlesSimpleLit,
         ParticlesUnlit,
+        BakedLit,
         Count
     }
 
@@ -23,6 +24,7 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
             "Lightweight Render Pipeline/Particles/Lit",
             "Lightweight Render Pipeline/Particles/Simple Lit",
             "Lightweight Render Pipeline/Particles/Unlit",
+            "Lightweight Render Pipeline/BakedLit",
         };
 
         public static string GetShaderPath(ShaderPathID id)

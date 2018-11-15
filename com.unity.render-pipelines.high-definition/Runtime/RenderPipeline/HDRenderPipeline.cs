@@ -1823,7 +1823,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                         var depthTexture = hdCamera.frameSettings.enableMSAA ? m_SharedRTManager.GetDepthValuesTexture() : m_SharedRTManager.GetDepthTexture();
 
                         HDUtils.CheckRTCreated(aoTarget.rt);
-                        postProcessLayer.BakeMSVOMap(cmd, camera, aoTarget, depthTexture, true);
+                        postProcessLayer.BakeMSVOMap(cmd, camera, aoTarget, depthTexture, true, hdCamera.frameSettings.enableMSAA);
                     }
                 }
             }

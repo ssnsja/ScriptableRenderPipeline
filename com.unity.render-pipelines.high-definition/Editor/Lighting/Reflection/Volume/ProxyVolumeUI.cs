@@ -15,6 +15,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
         #endregion
 
         #region Inspector
+        #pragma warning disable 618
         public static readonly CED.IDrawer SectionShape = CED.Action((s, d, o) =>
         {
             if (d.shape.hasMultipleDifferentValues)
@@ -40,6 +41,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 default: throw new ArgumentOutOfRangeException();
             }
         });
+        #pragma warning restore 618
         #endregion
 
         #region Body

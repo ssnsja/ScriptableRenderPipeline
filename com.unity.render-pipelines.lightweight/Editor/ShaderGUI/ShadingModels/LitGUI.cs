@@ -86,7 +86,7 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
                 occlusionMap = BaseShaderGUI.FindProperty("_OcclusionMap", properties, false);
                 // Advanced Props
                 highlights = BaseShaderGUI.FindProperty("_SpecularHighlights", properties, false);
-                reflections = BaseShaderGUI.FindProperty("_GlossyReflections", properties, false);
+                reflections = BaseShaderGUI.FindProperty("_EnvironmentReflections", properties, false);
             }
         }
 
@@ -175,17 +175,15 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
             CoreUtils.SetKeyword(material, "_SPECULAR_SETUP", isSpecularWorkFlow);
 
             CoreUtils.SetKeyword(material, "_METALLICSPECGLOSSMAP", hasGlossMap);
-            //CoreUtils.SetKeyword(material, "_SPECGLOSSMAP", hasGlossMap && isSpecularWorkFlow);
-            //CoreUtils.SetKeyword(material, "_METALLICGLOSSMAP", hasGlossMap && !isSpecularWorkFlow);
 
             CoreUtils.SetKeyword(material, "_NORMALMAP", material.GetTexture("_BumpMap"));
 
             if (material.HasProperty("_SpecularHighlights"))
                 CoreUtils.SetKeyword(material, "_SPECULARHIGHLIGHTS_OFF",
                     material.GetFloat("_SpecularHighlights") == 0.0f);
-            if (material.HasProperty("_GlossyReflections"))
-                CoreUtils.SetKeyword(material, "_GLOSSYREFLECTIONS_OFF",
-                    material.GetFloat("_GlossyReflections") == 0.0f);
+            if (material.HasProperty("_EnvironmentReflections"))
+                CoreUtils.SetKeyword(material, "_ENVIRONMENTREFLECTIONS_OFF",
+                    material.GetFloat("_EnvironmentReflections") == 0.0f);
             if (material.HasProperty("_OcclusionMap"))
                 CoreUtils.SetKeyword(material, "_OCCLUSIONMAP", material.GetTexture("_OcclusionMap"));
 

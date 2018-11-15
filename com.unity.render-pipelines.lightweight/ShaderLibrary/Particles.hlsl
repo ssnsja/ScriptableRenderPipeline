@@ -92,7 +92,7 @@ half3 Distortion(float4 baseColor, float3 normal, half strength, half blend, flo
 half4 BlendTexture(TEXTURE2D_ARGS(_Texture, sampler_Texture), float2 uv, float3 blendUv)
 {
     half4 color = SAMPLE_TEXTURE2D(_Texture, sampler_Texture, uv);
-#ifdef _FLIPBOOKBLENDING_OFF
+#ifdef _FLIPBOOKBLENDING_ON
     half4 color2 = SAMPLE_TEXTURE2D(_Texture, sampler_Texture, blendUv.xy);
     color = lerp(color, color2, blendUv.z);
 #endif

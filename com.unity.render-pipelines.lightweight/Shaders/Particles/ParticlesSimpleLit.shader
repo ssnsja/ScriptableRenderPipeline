@@ -24,7 +24,7 @@ Shader "Lightweight Render Pipeline/Particles/Simple Lit"
         [HideInInspector] _SpecSource("Specular Color Source", Float) = 0.0
         [HideInInspector] _SmoothnessSource("Smoothness Source", Float) = 0.0
         [ToggleOff] _SpecularHighlights("Specular Highlights", Float) = 1.0
-        [ToggleOff] _GlossyReflections("Glossy Reflections", Float) = 1.0
+        [ToggleOff] _EnvironmentReflections("Glossy Reflections", Float) = 1.0
         
         // -------------------------------------
         // Particle specific
@@ -40,7 +40,6 @@ Shader "Lightweight Render Pipeline/Particles/Simple Lit"
         [HideInInspector] _Surface("__surface", Float) = 0.0
         [HideInInspector] _Blend("__mode", Float) = 0.0
         [HideInInspector] _AlphaClip("__clip", Float) = 0.0
-        [HideInInspector] _Emission("__emission", Float) = 0.0
         [HideInInspector] _BlendOp("__blendop", Float) = 0.0
         [HideInInspector] _SrcBlend("__src", Float) = 1.0
         [HideInInspector] _DstBlend("__dst", Float) = 0.0
@@ -101,7 +100,7 @@ Shader "Lightweight Render Pipeline/Particles/Simple Lit"
             // Particle Keywords
             #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON
             #pragma shader_feature _ _COLOROVERLAY_ON _COLORCOLOR_ON _COLORADDSUBDIFF_ON
-            #pragma shader_feature _FLIPBOOKBLENDING_OFF
+            #pragma shader_feature _FLIPBOOKBLENDING_ON
             #pragma shader_feature _FADING_ON
             #pragma shader_feature _DISTORTION_ON
             

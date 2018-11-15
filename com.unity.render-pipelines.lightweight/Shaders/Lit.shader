@@ -4,9 +4,9 @@ Shader "Lightweight Render Pipeline/Lit"
     {
         // Specular vs Metallic workflow
         [HideInInspector] _WorkflowMode("WorkflowMode", Float) = 1.0
-
-        _BaseColor("Color", Color) = (0.5,0.5,0.5,1)
-        _BaseMap("Albedo", 2D) = "white" {}
+        
+        [MainColor] _BaseColor("Color", Color) = (0.5,0.5,0.5,1)
+        [MainTexture] _BaseMap("Albedo", 2D) = "white" {}
 
         _Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
 
@@ -21,7 +21,7 @@ Shader "Lightweight Render Pipeline/Lit"
         _SpecGlossMap("Specular", 2D) = "white" {}
 
         [ToggleOff] _SpecularHighlights("Specular Highlights", Float) = 1.0
-        [ToggleOff] _GlossyReflections("Glossy Reflections", Float) = 1.0
+        [ToggleOff] _EnvironmentReflections("Environment Reflections", Float) = 1.0
 
         _BumpScale("Scale", Float) = 1.0
         _BumpMap("Normal Map", 2D) = "bump" {}
@@ -85,7 +85,7 @@ Shader "Lightweight Render Pipeline/Lit"
             #pragma shader_feature _OCCLUSIONMAP
 
             #pragma shader_feature _SPECULARHIGHLIGHTS_OFF
-            #pragma shader_feature _GLOSSYREFLECTIONS_OFF
+            #pragma shader_feature _ENVIRONMENTREFLECTIONS_OFF
             #pragma shader_feature _SPECULAR_SETUP
             #pragma shader_feature _RECEIVE_SHADOWS_OFF
 

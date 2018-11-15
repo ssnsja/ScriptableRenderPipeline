@@ -381,7 +381,7 @@ half3 SampleLightmap(float2 lightmapUV, half3 normalWS)
 
 half3 GlossyEnvironmentReflection(half3 reflectVector, half perceptualRoughness, half occlusion)
 {
-#if !defined(_GLOSSYREFLECTIONS_OFF)
+#if !defined(_ENVIRONMENTREFLECTIONS_OFF)
     half mip = PerceptualRoughnessToMipmapLevel(perceptualRoughness);
     half4 encodedIrradiance = SAMPLE_TEXTURECUBE_LOD(unity_SpecCube0, samplerunity_SpecCube0, reflectVector, mip);
 

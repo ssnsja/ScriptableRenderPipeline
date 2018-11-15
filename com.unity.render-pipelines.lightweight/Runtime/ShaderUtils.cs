@@ -2,11 +2,11 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
 {
     public enum ShaderPathID
     {
-        PhysicallyBased,
+        Lit,
         SimpleLit,
         Unlit,
-        TerrainPhysicallyBased,
-        ParticlesPhysicallyBased,
+        TerrainLit,
+        ParticlesLit,
         ParticlesSimpleLit,
         ParticlesUnlit,
         Count

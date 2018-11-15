@@ -31,7 +31,7 @@ namespace UnityEditor
         {
             BackFace = 2,
             FrontFace = 1,
-            Off = 0
+            None = 0
         }
 
         protected class Styles
@@ -368,6 +368,14 @@ namespace UnityEditor
                         break;
                 }
             }
+        }
+
+        public static void SetMaterialKeywords(Material material)
+        {
+            MaterialEditor.FixupEmissiveFlag(material);
+            bool shouldEmissionBeEnabled =
+                (material.globalIlluminationFlags & MaterialGlobalIlluminationFlags.EmissiveIsBlack) == 0;
+            SetKeyword(material, "_EMISSION", shouldEmissionBeEnabled);
         }
 
         [MenuItem("CONTEXT/Material/Test", false, 999)]

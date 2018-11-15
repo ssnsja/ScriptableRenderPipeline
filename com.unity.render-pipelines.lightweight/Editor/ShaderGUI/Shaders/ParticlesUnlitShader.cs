@@ -33,6 +33,7 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
             SetupMaterialBlendMode(material);
             //SetupMaterialWithBlendMode(material, (BlendMode)material.GetFloat("_Blend"));
             ParticleGUI.SetupMaterialWithColorMode(material);
+            SetMaterialKeywords(material);
             ParticleGUI.SetMaterialKeywords(material); // Set particle specific keywords
             BakedLitGUI.SetMaterialKeywords(material); // Set lit specific 
         }
@@ -65,19 +66,9 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
             {
                 materialEditor.ShaderProperty(particleProps.flipbookMode, ParticleGUI.Styles.flipbookMode);
                 ParticleGUI.FadingOptions(material, materialEditor, particleProps);
-            }
-            base.DrawAdvancedOptions(material);
-        }
-
-        public override void DrawAdditionalFoldouts(Material material)
-        {
-            var vertexStreams = EditorGUILayout.BeginFoldoutHeaderGroup(GetHeaderState(3), ParticleGUI.Styles.VertexStreams, EditorStyles.foldoutHeader, NullThing, ParticleGUI.Styles.vertexStreamIcon);
-            if (vertexStreams)
-            {
                 ParticleGUI.DoVertexStreamsArea(material, m_RenderersUsingThisMaterial);
             }
-            EditorGUILayout.EndFoldoutHeaderGroup();
-            StoreHeaderState(vertexStreams, 3);
+            base.DrawAdvancedOptions(material);
         }
 
         private static void NullThing(Rect rect){}

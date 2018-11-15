@@ -65,11 +65,12 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
             {
                 materialEditor.ShaderProperty(particleProps.flipbookMode, ParticleGUI.Styles.flipbookMode);
                 ParticleGUI.FadingOptions(material, materialEditor, particleProps);
+                ParticleGUI.DoVertexStreamsArea(material, m_RenderersUsingThisMaterial);
             }
             base.DrawAdvancedOptions(material);
         }
 
-        public override void DrawAdditionalFoldouts(Material material)
+/*        public override void DrawAdditionalFoldouts(Material material)
         {
             var vertexStreams = EditorGUILayout.BeginFoldoutHeaderGroup(GetHeaderState(3), ParticleGUI.Styles.VertexStreams, EditorStyles.foldoutHeader, NullThing, ParticleGUI.Styles.vertexStreamIcon);
             if (vertexStreams)
@@ -78,7 +79,7 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
             StoreHeaderState(vertexStreams, 3);
-        }
+        }*/
 
         private static void NullThing(Rect rect){}
 

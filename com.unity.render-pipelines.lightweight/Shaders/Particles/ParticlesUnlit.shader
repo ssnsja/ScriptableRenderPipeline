@@ -18,15 +18,12 @@ Shader "Lightweight Render Pipeline/Particles/Unlit"
         _SoftParticlesFarFadeDistance("Soft Particles Far Fade", Float) = 1.0
         _CameraNearFadeDistance("Camera Near Fade", Float) = 1.0
         _CameraFarFadeDistance("Camera Far Fade", Float) = 2.0
-        _DistortionBlend("Distortion Blend", Float) = 0.5
-        _DistortionStrength("Distortion Strength", Float) = 1.0
 
         // -------------------------------------
         // Hidden properties - Generic
         [HideInInspector] _Surface("__surface", Float) = 0.0
         [HideInInspector] _Blend("__mode", Float) = 0.0
         [HideInInspector] _AlphaClip("__clip", Float) = 0.0
-        [HideInInspector] _EmissionEnabled("__emissionenabled", Float) = 0.0
         [HideInInspector] _BlendOp("__blendop", Float) = 0.0
         [HideInInspector] _SrcBlend("__src", Float) = 1.0
         [HideInInspector] _DstBlend("__dst", Float) = 0.0
@@ -40,8 +37,6 @@ Shader "Lightweight Render Pipeline/Particles/Unlit"
         [HideInInspector] _CameraFadingEnabled("__camerafadingenabled", Float) = 0.0
         [HideInInspector] _SoftParticleFadeParams("__softparticlefadeparams", Vector) = (0,0,0,0)
         [HideInInspector] _CameraFadeParams("__camerafadeparams", Vector) = (0,0,0,0)
-        [HideInInspector] _DistortionEnabled("__distortionenabled", Float) = 0.0
-        [HideInInspector] _DistortionStrengthScaled("Distortion Strength Scaled", Float) = 0.1
         
         // Editmode props
         [HideInInspector] _QueueOffset("Queue offset", Float) = 0.0
@@ -83,9 +78,8 @@ Shader "Lightweight Render Pipeline/Particles/Unlit"
             // Particle Keywords
             #pragma shader_feature _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON
             #pragma shader_feature _ _COLOROVERLAY_ON _COLORCOLOR_ON _COLORADDSUBDIFF_ON
-            #pragma shader_feature _FLIPBOOKBLENDING_OFF
+            #pragma shader_feature _FLIPBOOKBLENDING_ON
             #pragma shader_feature _FADING_ON
-            #pragma shader_feature _DISTORTION_ON
             
             // -------------------------------------
             // Unity defined keywords

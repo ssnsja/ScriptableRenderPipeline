@@ -66,7 +66,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossinessSource: 0
-    - _GlossyReflections: 1
+    - _EnvironmentReflections: 1
     - _Mode: 0
     - _Parallax: 0.02
     - _ReceiveShadows: 1

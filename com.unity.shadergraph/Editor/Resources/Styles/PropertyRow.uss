@@ -1,10 +1,11 @@
 PropertyRow EnumField,
 PropertyRow Label,
 PropertyRow Toggle,
+PropertyRow IntegerField,
 PropertyRow DoubleField {
     margin-left: 0;
     margin-right: 0;
-	-unity-text-align : left;
+	text-alignment : middle-left;
 }
 
 PropertyRow > #container{

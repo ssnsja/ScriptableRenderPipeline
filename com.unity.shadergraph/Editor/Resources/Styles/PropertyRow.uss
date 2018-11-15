@@ -4,6 +4,7 @@ PropertyRow Toggle,
 PropertyRow DoubleField {
     margin-left: 0;
     margin-right: 0;
+	-unity-text-align : left;
 }
 
 PropertyRow > #container{

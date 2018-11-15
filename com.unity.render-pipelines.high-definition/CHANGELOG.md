@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [5.1.0-preview] - 2018-10-18
 
 ### Added
+- Added new API to perform a camera rendering
 - Added separate editor resources file for those resources to not be taken in player builds.
 - Added support for disabling SSR on materials in shader graph
 - Added support of MSAA when Both ListShaderMode is enabled (previously only Forward mode was supported)
@@ -136,7 +137,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added controls for linear fade at the boundary of density volumes
 - Added new API to control decals without monobehaviour object
-- Added new API to perform a camera rendering
 - Added a new TerrainLit shader that supports rendering of Unity terrains.
 - Added controls for linear fade at the boundary of density volumes
 - Added new API to control decals without monobehaviour object

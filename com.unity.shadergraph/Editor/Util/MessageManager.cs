@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace UnityEditor.Graphing.Util
 {
-    public class MessageManager
+    class MessageManager
     {
         Dictionary<object, Dictionary<Identifier, List<ShaderMessage>>> m_Messages =
             new Dictionary<object, Dictionary<Identifier, List<ShaderMessage>>>();
-        
+
         Dictionary<Identifier, List<ShaderMessage>> m_Combined = new Dictionary<Identifier, List<ShaderMessage>>();
 
         public bool nodeMessagesChanged { get; private set; }
@@ -59,7 +59,7 @@ namespace UnityEditor.Graphing.Util
                         fixedNodes.Add(messageList.Key);
                     }
                 }
-                
+
                 // If all the messages from a provider for a node are gone,
                 // we can now remove it from the list since that will be reported in m_Combined
                 fixedNodes.ForEach(nodeId => messageMap.Value.Remove(nodeId));
@@ -74,7 +74,7 @@ namespace UnityEditor.Graphing.Util
             foreach (var messageMap in m_Messages)
             {
                 nodeMessagesChanged |= messageMap.Value.Remove(nodeId);
-                
+
             }
         }
 
@@ -123,7 +123,7 @@ namespace UnityEditor.Graphing.Util
                     }
                 }
             }
-            Debug.Log(output.ToString()); 
+            Debug.Log(output.ToString());
         }
     }
 }

@@ -5,7 +5,7 @@ using static UnityEditor.Experimental.Rendering.HDPipeline.HDEditorUtils;
 
 namespace UnityEditor.Experimental.Rendering.HDPipeline
 {
-    using _ = CoreEditorUtils;
+    using _ = UnityEditor.Rendering.CoreEditorUtils;
 
     internal partial class CameraSettingsUI
     {

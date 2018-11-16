@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 
@@ -7,7 +5,7 @@ using static UnityEditor.Experimental.Rendering.HDPipeline.HDEditorUtils;
 
 namespace UnityEditor.Experimental.Rendering.HDPipeline
 {
-    using _ = CoreEditorUtils;
+    using _ = UnityEditor.Rendering.CoreEditorUtils;
 
     sealed internal partial class ProbeSettingsUI
     {

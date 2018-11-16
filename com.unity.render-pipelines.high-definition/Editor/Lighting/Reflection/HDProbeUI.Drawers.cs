@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEditorInternal;
+using System.Reflection;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
 using UnityEngine.Experimental.Rendering.HDPipeline;
+using UnityEngine.Rendering;
 
 namespace UnityEditor.Experimental.Rendering.HDPipeline
 {
-    using _ = CoreEditorUtils;
-    using CED = CoreEditorDrawer<HDProbeUI, SerializedHDProbe>;
+    using _ = UnityEditor.Rendering.CoreEditorUtils;
 
     partial class HDProbeUI
     {

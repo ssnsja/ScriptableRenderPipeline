@@ -1,11 +1,11 @@
 using UnityEngine.Events;
 using UnityEditor.AnimatedValues;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 
 namespace UnityEditor.Experimental.Rendering.HDPipeline
 {
-    using _ = CoreEditorUtils;
     using CED = CoreEditorDrawer<HDRenderPipelineUI, SerializedHDRenderPipelineAsset>;
 
 #pragma warning disable 618 // TODO: update to IUpdateable interface

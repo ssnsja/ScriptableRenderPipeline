@@ -33,16 +33,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Non-exposed properties in the blackboard no longer have a green dot next to them.
 - Default reference name for shader properties are now serialized. You cannot change them after initial creation.
 - When you save Shader Graph and Sub Graph files, they're now automatically checked out on version control.
-- Converting an inline node to a `Property` node no longer allows duplicate property names.
-- Moving a node now triggers a save needed action.
-- Editing Property parameters on the Blackboard is now recorded for Undo actions.
-- Converting a Property node to an inline node and vice versa is now recorded for Undo actions.
-- Moving a node is now recorded for Undo actions.
-- `Texture2D` Property type `Mode` dropdown is no longer selectable when the Property is not exposed. This previously had no effect.
-- `Vector1` Property type now handles default values more intuitively when switching `Mode` dropdown.
-- `Color` node control is now a consistent width.
-- Function declarations no longer contain doubel delimiters.
-- `Slider` node control now functions correctly.
+- When you convert an inline node to a `Property` node, this no longer allows duplicate property names.
+- When you move a node, you'll now be asked to save the Graph Graph file.
+- You can now Undo edits to Property parameters on the Blackboard.
+- You can now Undo conversions between `Property` nodes and inline nodes.
+- You can now Undo moving a node.
+- You can no longer select the `Texture2D` Property type `Mode`, if the Property is not exposed.
+- The `Vector1` Property type now handles default values more intuitively when switching `Mode` dropdown.
+- The `Color` node control is now a consistent width.
+- Function declarations no longer contain double delimiters.
+- The `Slider` node control now functions correctly.
 
 ## [5.0.0-preview] - 2018-09-28
 

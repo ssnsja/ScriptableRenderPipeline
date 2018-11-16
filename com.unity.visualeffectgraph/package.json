@@ -1,6 +1,6 @@
 {
     "name":"com.unity.visualeffectgraph",
-    "displayName": "Visual Effects Graph",
+    "displayName": "Visual Effect Graph",
     "version":"0.1.0",
     "description":"Visual Effect Graph : Node-Based, GPU-Accelerated, Next-Generation Visual Effects solution",
     "keywords":[

@@ -44,7 +44,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                 var mat = Matrix4x4.TRS(p.transform.position, p.transform.rotation, Vector3.one);
                 p.transform.position = mat.MultiplyPoint(p.influenceVolume.obsoleteOffset);
 #pragma warning restore 618
-                var mirrorRotationWS = p.transform.rotation * Quaternion.FromToRotation(Vector3.up, Vector3.forward);
+                var mirrorRotationWS = p.transform.rotation * Quaternion.Euler(0, 90, 0);
                 var worldToProxy = p.proxyToWorld.inverse;
                 var mirrorPositionPS = worldToProxy.MultiplyPoint(mirrorPositionWS);
                 var mirrorRotationPS = worldToProxy.rotation * mirrorRotationWS;

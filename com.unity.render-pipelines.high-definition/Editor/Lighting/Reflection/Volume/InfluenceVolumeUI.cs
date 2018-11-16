@@ -34,23 +34,23 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
         public InfluenceVolumeUI()
         {
             boxBaseHandle = new HierarchicalBox(
-                HDReflectionProbeEditor.k_GizmoThemeColorExtent, HDReflectionProbeEditor.k_HandlesColor
+                k_GizmoThemeColorBase, k_HandlesColor
             );
             boxInfluenceHandle = new HierarchicalBox(
-                HDReflectionProbeEditor.k_GizmoThemeColorInfluenceBlend,
-                HDReflectionProbeEditor.k_HandlesColor, parent: boxBaseHandle
+                k_GizmoThemeColorInfluence,
+                k_HandlesColor, parent: boxBaseHandle
             );
             boxInfluenceNormalHandle = new HierarchicalBox(
-                HDReflectionProbeEditor.k_GizmoThemeColorInfluenceNormalBlend,
-                HDReflectionProbeEditor.k_HandlesColor, parent: boxBaseHandle
+                k_GizmoThemeColorInfluenceNormal,
+                k_HandlesColor, parent: boxBaseHandle
             );
 
-            sphereBaseHandle = new HierarchicalSphere(HDReflectionProbeEditor.k_GizmoThemeColorExtent);
+            sphereBaseHandle = new HierarchicalSphere(k_GizmoThemeColorBase);
             sphereInfluenceHandle = new HierarchicalSphere(
-                HDReflectionProbeEditor.k_GizmoThemeColorInfluenceBlend, parent: sphereBaseHandle
+                k_GizmoThemeColorInfluence, parent: sphereBaseHandle
             );
             sphereInfluenceNormalHandle = new HierarchicalSphere(
-                HDReflectionProbeEditor.k_GizmoThemeColorInfluenceNormalBlend, parent: sphereBaseHandle
+                k_GizmoThemeColorInfluenceNormal, parent: sphereBaseHandle
             );
         }
 

@@ -3,16 +3,10 @@ using UnityEditorInternal;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
+namespace UnityEditor.Rendering.LWRP.ShaderGUI
 {
     public static class ParticleGUI
     {
-        public enum FlipbookMode
-        {
-            Simple,
-            Blended
-        }
-
         public enum ColorMode
         {
             Multiply,
@@ -397,53 +391,5 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
             var useFading = (useSoftParticles || useCameraFading) && !hasZWrite;
             BaseShaderGUI.SetKeyword(material, "_FADING_ON", useFading);
         }
-        
-/*        public override void AssignNewShaderToMaterial(Material material, Shader oldShader, Shader newShader)
-        {
-            if (material == null)
-                throw new ArgumentNullException("material");
-    
-            if (material == null)
-                throw new ArgumentNullException("oldShader");
-    
-            if (newShader == null)
-                throw new ArgumentNullException("newShader");
-    
-            // Sync the lighting flag for the unlit shader
-                if (newShader.name.Contains("Unlit"))
-                material.SetFloat("_LightingEnabled", 0.0f);
-            else
-                material.SetFloat("_LightingEnabled", 1.0f);#2#
-    
-            // _Emission property is lost after assigning Standard shader to the material
-            // thus transfer it before assigning the new shader
-            if (material.HasProperty("_Emission"))
-            {
-                material.SetColor("_EmissionColor", material.GetColor("_Emission"));
-            }
-    
-            base.AssignNewShaderToMaterial(material, oldShader, newShader);
-    
-            if (oldShader == null || !oldShader.name.Contains("Legacy Shaders/"))
-            {
-                SetupMaterialWithBlendMode(material, (BlendMode)material.GetFloat("_Blend"));
-                return;
-            }
-    
-            BlendMode blendMode = BlendMode.Opaque;
-            if (oldShader.name.Contains("/Transparent/Cutout/"))
-            {
-                blendMode = BlendMode.Cutout;
-            }
-            else if (oldShader.name.Contains("/Transparent/"))
-            {
-                // NOTE: legacy shaders did not provide physically based transparency
-                // therefore Fade mode
-                blendMode = BlendMode.Fade;
-            }
-            material.SetFloat("_Blend", (float)blendMode);
-    
-            MaterialChanged(material);
-        }*/
     }
 } // namespace UnityEditor

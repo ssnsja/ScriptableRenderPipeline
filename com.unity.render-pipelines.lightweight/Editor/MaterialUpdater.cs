@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.LightweightPipeline;
+using UnityEngine.Rendering.LWRP;
 
-namespace UnityEditor.Experimental.Rendering.LightweightPipeline
+namespace UnityEditor.Rendering.LWRP
 {
     public static class MaterialUpdater
     {
@@ -146,6 +146,7 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline
             RenameShader(oldShaderName, ShaderUtils.GetShaderPath(ShaderPathID.SimpleLit), UpgradeToSimpleLit);
             
             RenameTexture("_MainTex", "_BaseMap");
+            RenameColor("_Color", "_BaseColor");
             RenameFloat("_SpecSource", "_SpecularHighlights");
         }
         

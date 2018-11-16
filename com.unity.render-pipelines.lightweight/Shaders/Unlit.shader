@@ -157,5 +157,5 @@ Shader "Lightweight Render Pipeline/Unlit"
         }
     }
     FallBack "Hidden/InternalErrorShader"
-    CustomEditor "UnityEditor.Rendering.LWRP.UnlitShaderGUI"
+    CustomEditor "UnityEditor.Rendering.LWRP.ShaderGUI.UnlitShader"
 }

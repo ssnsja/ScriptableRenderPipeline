@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
+using UnityEngine.Rendering;
 
-namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
+namespace UnityEditor.Rendering.LWRP.ShaderGUI
 {
     public static class BakedLitGUI
     {

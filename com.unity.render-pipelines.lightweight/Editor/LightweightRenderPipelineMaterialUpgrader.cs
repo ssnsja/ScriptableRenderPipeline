@@ -21,7 +21,6 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline
             MaterialUpgrader.UpgradeProjectFolder(upgraders, "Upgrade to LightweightRP Materials", MaterialUpgrader.UpgradeFlags.LogMessageWhenNoUpgraderFound);
         }
 
-        [MenuItem("Assets/Render Pipeline/Upgrade Selected Materials to LightweightRP Materials")]
         [MenuItem("Edit/Render Pipeline/Upgrade Selected Materials to LightweightRP Materials", priority = CoreUtils.editMenuPriority2)]
         private static void UpgradeSelectedMaterials()
         {

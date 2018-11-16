@@ -110,7 +110,6 @@ Shader "Lightweight Render Pipeline/Lit"
             #pragma multi_compile _ DIRLIGHTMAP_COMBINED
             #pragma multi_compile _ LIGHTMAP_ON
             #pragma multi_compile_fog
-            
 
             //--------------------------------------
             // GPU Instancing
@@ -220,5 +219,5 @@ Shader "Lightweight Render Pipeline/Lit"
 
     }
     FallBack "Hidden/InternalErrorShader"
-    CustomEditor "UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI.LitShader"
+    CustomEditor "UnityEditor.Rendering.LWRP.LitShaderGUI"
 }

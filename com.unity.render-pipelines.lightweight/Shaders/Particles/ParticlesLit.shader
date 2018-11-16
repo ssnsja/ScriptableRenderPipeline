@@ -119,5 +119,5 @@ Shader "Lightweight Render Pipeline/Particles/Lit"
     }
 
     Fallback "Lightweight Render Pipeline/Particles/SimpleLit"
-    CustomEditor "UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI.ParticlesLitShader"
+    CustomEditor "UnityEditor.Rendering.LWRP.ParticlesLitShaderGUI"
 }

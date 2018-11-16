@@ -2,7 +2,7 @@ using System;
 
 namespace UnityEngine.Experimental.Rendering.HDPipeline
 {
-    [ExecuteInEditMode]
+    [ExecuteAlways]
     public abstract partial class HDProbe : MonoBehaviour
     {
         [Serializable]

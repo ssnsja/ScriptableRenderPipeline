@@ -398,7 +398,7 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
             BaseShaderGUI.SetKeyword(material, "_FADING_ON", useFading);
         }
         
-        /*public override void AssignNewShaderToMaterial(Material material, Shader oldShader, Shader newShader)
+/*        public override void AssignNewShaderToMaterial(Material material, Shader oldShader, Shader newShader)
         {
             if (material == null)
                 throw new ArgumentNullException("material");
@@ -410,10 +410,10 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline.ShaderGUI
                 throw new ArgumentNullException("newShader");
     
             // Sync the lighting flag for the unlit shader
-    /*            if (newShader.name.Contains("Unlit"))
+                if (newShader.name.Contains("Unlit"))
                 material.SetFloat("_LightingEnabled", 0.0f);
             else
-                material.SetFloat("_LightingEnabled", 1.0f);#1#
+                material.SetFloat("_LightingEnabled", 1.0f);#2#
     
             // _Emission property is lost after assigning Standard shader to the material
             // thus transfer it before assigning the new shader

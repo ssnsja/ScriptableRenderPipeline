@@ -378,16 +378,28 @@ namespace UnityEditor
             SetKeyword(material, "_EMISSION", shouldEmissionBeEnabled);
         }
 
+/*        public override void AssignNewShaderToMaterial(Material material, Shader oldShader, Shader newShader)
+        {
+            base.AssignNewShaderToMaterial(material, oldShader, newShader);
+            
+        }*/
+
         [MenuItem("CONTEXT/Material/Test", false, 999)]
         static void Test(MenuCommand command)
         {
             Material mat = (Material) command.context;
             Shader shader = mat.shader;
 
-            var bumpScale = mat.HasProperty("_BumpScale"); // checks shader
+            var bumpScale = mat.GetTexturePropertyNames(); // checks shader
+
+            var texNames = "names:\n";
+            foreach (var name in bumpScale)
+            {
+                texNames += name + "\n";
+            }
             //mat.
             
-            Debug.Log("Clicking on " + mat.name + " and bump scale is " + bumpScale);
+            Debug.Log("Clicking on " + mat.name + " and maintex is " + texNames + "\n texture" + mat.GetTexture("_MainTex").name + mat.GetColor("_Color"));
         }
 
         public void DoPopup(GUIContent label, MaterialProperty property, string[] options)

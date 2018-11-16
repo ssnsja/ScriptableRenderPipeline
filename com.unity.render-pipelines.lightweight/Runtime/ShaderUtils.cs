@@ -24,7 +24,7 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
             "Lightweight Render Pipeline/Particles/Lit",
             "Lightweight Render Pipeline/Particles/Simple Lit",
             "Lightweight Render Pipeline/Particles/Unlit",
-            "Lightweight Render Pipeline/BakedLit",
+            "Lightweight Render Pipeline/Baked Lit",
         };
 
         public static string GetShaderPath(ShaderPathID id)

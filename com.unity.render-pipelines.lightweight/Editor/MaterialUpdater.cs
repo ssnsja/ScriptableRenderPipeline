@@ -13,7 +13,7 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline
             List<MaterialUpgrader> upgraders = new List<MaterialUpgrader>();
             GetUpgraders(ref upgraders);
 
-            MaterialUpgrader.UpgradeProjectFolder(upgraders, "Upgrade to LightweightRP Materials", MaterialUpgrader.UpgradeFlags.LogMessageWhenNoUpgraderFound);
+            MaterialUpgrader.UpgradeProjectFolder(upgraders, "Update to LightweightRP Materials", MaterialUpgrader.UpgradeFlags.LogMessageWhenNoUpgraderFound);
         }
         
         [MenuItem("Edit/Render Pipeline/Update selected Lightweight Render Pipeline Materials")]
@@ -22,7 +22,7 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline
             List<MaterialUpgrader> upgraders = new List<MaterialUpgrader>();
             GetUpgraders(ref upgraders);
 
-            MaterialUpgrader.UpgradeSelection(upgraders, "Upgrade to LightweightRP Materials", MaterialUpgrader.UpgradeFlags.LogMessageWhenNoUpgraderFound);
+            MaterialUpgrader.UpgradeSelection(upgraders, "Update LightweightRP Materials", MaterialUpgrader.UpgradeFlags.LogMessageWhenNoUpgraderFound);
         }
 
         private static void GetUpgraders(ref List<MaterialUpgrader> upgraders)
@@ -50,6 +50,10 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline
                 material.SetFloat("_Smoothness", material.GetFloat("_GlossMapScale"));
             else
                 material.SetFloat("_Smoothness", material.GetFloat("_Glossiness"));
+            
+            material.SetColor("_BaseColor", material.GetColor("_Color"));
+
+            SetQueue(material);
         }
 
         public static void UpdateStandardSpecularMaterialKeywords(Material material)
@@ -61,6 +65,25 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline
                 material.SetFloat("_Smoothness", material.GetFloat("_GlossMapScale"));
             else
                 material.SetFloat("_Smoothness", material.GetFloat("_Glossiness"));
+            
+            material.SetColor("_BaseColor", material.GetColor("_Color"));
+
+            SetQueue(material);
+        }
+
+        public static void SetQueue(Material material)
+        {
+            if (material.GetFloat("_Surface") == 0)
+            {
+                if (material.GetFloat("_AlphaClip") == 0)
+                    material.renderQueue = 2000;
+                else
+                    material.renderQueue = 2450;
+            }
+            else
+            {
+                material.renderQueue = 3000;
+            }
         }
 
         public LitUpdater(string oldShaderName)
@@ -87,16 +110,17 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline
     
     internal class UnlitUpdater : MaterialUpgrader
     {
-        static Shader unlitShader = Shader.Find(ShaderUtils.GetShaderPath(ShaderPathID.Unlit));
+        static Shader bakedLit = Shader.Find(ShaderUtils.GetShaderPath(ShaderPathID.BakedLit));
         
         public static void UpgradeToUnlit(Material material)
         {
             if (material == null)
                 throw new ArgumentNullException("material");
 
-            if (material.GetFloat("_SampleGI") == 0)
+            if (material.GetFloat("_SampleGI") != 0)
             {
-                material.shader = unlitShader;
+                material.shader = bakedLit;
+                material.EnableKeyword("_NORMALMAP");
             }
         }
 
@@ -105,10 +129,7 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline
             if (oldShaderName == null)
                 throw new ArgumentNullException("oldShaderName");
 
-            if (oldShaderName.Contains("Specular"))
-            {
-                RenameShader(oldShaderName, ShaderUtils.GetShaderPath(ShaderPathID.BakedLit), UpgradeToUnlit);
-            }
+            RenameShader(oldShaderName, ShaderUtils.GetShaderPath(ShaderPathID.Unlit), UpgradeToUnlit);
 
             RenameTexture("_MainTex", "_BaseMap");
             RenameColor("_Color", "_BaseColor");
@@ -122,11 +143,31 @@ namespace UnityEditor.Experimental.Rendering.LightweightPipeline
             if (oldShaderName == null)
                 throw new ArgumentNullException("oldShaderName");
             
+            RenameShader(oldShaderName, ShaderUtils.GetShaderPath(ShaderPathID.SimpleLit), UpgradeToSimpleLit);
+            
             RenameTexture("_MainTex", "_BaseMap");
-            RenameColor("_Color", "_BaseColor");
-            RenameFloat("_Shininess", "_Smoothness");
-            RenameFloat("_GlossinessSource", "_SmoothnessSource");
             RenameFloat("_SpecSource", "_SpecularHighlights");
+        }
+        
+        public static void UpgradeToSimpleLit(Material material)
+        {
+            if (material == null)
+                throw new ArgumentNullException("material");
+
+            material.SetFloat("_SmoothnessSource" ,1 - material.GetFloat("_GlossinessSource"));
+            if (material.GetTexture("_SpecGlossMap") == null)
+            {
+                var col = material.GetColor("_SpecColor");
+                
+                col.a = material.GetFloat("_Shininess");
+                material.SetColor("_SpecColor", col);
+                if (material.GetFloat("_Surface") == 0)
+                {
+                    var colBase = material.GetColor("_Color");
+                    colBase.a = col.a;
+                    material.SetColor("_BaseColor", colBase);
+                }
+            }
         }
     }
 }

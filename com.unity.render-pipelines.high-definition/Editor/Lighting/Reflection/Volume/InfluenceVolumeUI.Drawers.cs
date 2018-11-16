@@ -152,7 +152,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 EditorGUI.BeginChangeCheck();
                 var positive = d.editorAdvancedModeFaceFadePositive.vector3Value;
                 var negative = d.editorAdvancedModeFaceFadeNegative.vector3Value;
-                CoreEditorUtils.DrawVector6(faceFadeContent, ref positive, ref negative, Vector3.zero, Vector3.one, HDReflectionProbeEditor.k_HandlesColor);
+                CoreEditorUtils.DrawVector6(faceFadeContent, ref positive, ref negative, Vector3.zero, Vector3.one, k_HandlesColor);
                 d.editorAdvancedModeFaceFadePositive.vector3Value = positive;
                 d.editorAdvancedModeFaceFadeNegative.vector3Value = negative;
                 if (EditorGUI.EndChangeCheck())
@@ -188,7 +188,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 var negative = blendDistanceNegative.vector3Value;
                 CoreEditorUtils.DrawVector6(
                     content,
-                    ref positive, ref negative, Vector3.zero, maxBlendDistance, HDReflectionProbeEditor.k_HandlesColor);
+                    ref positive, ref negative, Vector3.zero, maxBlendDistance, k_HandlesColor);
                 blendDistancePositive.vector3Value = positive;
                 blendDistanceNegative.vector3Value = negative;
                 if (EditorGUI.EndChangeCheck())

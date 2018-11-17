@@ -12,7 +12,7 @@ public class LWGraphicsTestsXR
     public const string lwPackagePath = "Packages/com.unity.testing.srp.lightweight.xr/Tests/ReferenceImages";
 
     [UnityTest, Category("LightWeightRPXR")]
-    [PrebuildSetup("SetupGraphicsTestCases")]
+    [PrebuildSetup("SetupGraphicsTestCasesXR")]
     [UseGraphicsTestCases(lwPackagePath)]
     public IEnumerator Run(GraphicsTestCase testCase)
     {

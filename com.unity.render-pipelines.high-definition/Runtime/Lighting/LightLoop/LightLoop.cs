@@ -575,14 +575,10 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 
             // Setup shadow algorithms
             var shadowParams = hdAsset.renderPipelineSettings.hdShadowInitParams;
-            var punctualShadowKeywords = new[]{"PUNCTUAL_SHADOW_LOW", "PUNCTUAL_SHADOW_MEDIUM", "PUNCTUAL_SHADOW_HIGH"};
-            var directionalShadowKeywords = new[]{"DIRECTIONAL_SHADOW_LOW", "DIRECTIONAL_SHADOW_MEDIUM", "DIRECTIONAL_SHADOW_HIGH"};
-            foreach (var p in punctualShadowKeywords)
+            var shadowKeywords = new[]{"SHADOW_LOW", "SHADOW_MEDIUM", "SHADOW_HIGH"};
+            foreach (var p in shadowKeywords)
                 Shader.DisableKeyword(p);
-            foreach (var p in directionalShadowKeywords)
-                Shader.DisableKeyword(p);
-            Shader.EnableKeyword(punctualShadowKeywords[(int)shadowParams.punctualShadowQuality]);
-            Shader.EnableKeyword(directionalShadowKeywords[(int)shadowParams.directionalShadowQuality]);
+            Shader.EnableKeyword(shadowKeywords[(int)shadowParams.shadowQuality]);
 
             InitShadowSystem(hdAsset);
 
@@ -801,13 +797,14 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                 return false;
 
             // Ratio of the size of the light on screen and its intensity, gives a value used to compare light importance
-            float lightDominanceValue = light.screenRect.size.magnitude * lightComponent.intensity;
+            float lightDominanceValue = light.screenRect.size.magnitude * lightComponent.intensity;;
 
-            if (additionalShadowData == null || !additionalShadowData.contactShadows || lightComponent.shadows == LightShadows.None)
+            if (additionalShadowData == null || !additionalShadowData.contactShadows)
                 return false;
             if (lightDominanceValue <= m_DominantLightValue || m_DominantLightValue == Single.PositiveInfinity)
                 return false;
 
+            // Directional lights are always considered first.
             if (light.lightType == LightType.Directional)
                 m_DominantLightValue = Single.PositiveInfinity;
             else
@@ -918,7 +915,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 
             lightData.contactShadowIndex = -1;
 
-            // The first shadow casting directional light with contact shadow enabled is always taken as dominant light
+            // The first directional light with contact shadow enabled is always taken as dominant light
             if (GetDominantLightWithShadows(additionalShadowData, light, lightComponent))
                 lightData.contactShadowIndex = 0;
 

@@ -180,7 +180,7 @@ namespace UnityEditor.ShaderGraph
         {
             var graph = owner as AbstractMaterialGraph;
 
-            if (!graph.properties.Any(x => x.guid == propertyGuid))
+            if (!propertyGuid.Equals(Guid.Empty) && !graph.properties.Any(x => x.guid == propertyGuid))
                 return true;
 
             return false;

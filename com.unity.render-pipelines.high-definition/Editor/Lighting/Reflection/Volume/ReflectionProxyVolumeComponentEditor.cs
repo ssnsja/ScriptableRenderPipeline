@@ -54,36 +54,39 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 var tr = comp.transform;
                 var prox = comp.proxyVolume;
 
-                switch (prox.shape)
+                using (new Handles.DrawingScope(Matrix4x4.TRS(Vector3.zero, tr.rotation, Vector3.one)))
                 {
-                    case ProxyShape.Box:
-                        m_BoxHandle.center = tr.position;
-                        m_BoxHandle.size = prox.boxSize;
-                        EditorGUI.BeginChangeCheck();
-                        m_BoxHandle.DrawHull(true); 
-                        m_BoxHandle.DrawHandle();
-                        if (EditorGUI.EndChangeCheck())
-                        {
-                            Undo.RecordObjects(new Object[] { tr, comp }, "Update Proxy Volume Size");
-                            tr.position = m_BoxHandle.center;
-                            prox.boxSize = m_BoxHandle.size;
-                        }
-                        break;
-                    case ProxyShape.Sphere:
-                        m_SphereHandle.center = tr.position;
-                        m_SphereHandle.radius = prox.sphereRadius;
-                        EditorGUI.BeginChangeCheck();
-                        m_SphereHandle.DrawHull(true);
-                        m_SphereHandle.DrawHandle();
-                        if (EditorGUI.EndChangeCheck())
-                        {
-                            Undo.RecordObjects(new Object[] { tr, comp }, "Update Proxy Volume Size");
-                            tr.position = m_SphereHandle.center;
-                            prox.sphereRadius = m_SphereHandle.radius;
-                        }
-                        break;
-                    case ProxyShape.Infinite:
-                        break;
+                    switch (prox.shape)
+                    {
+                        case ProxyShape.Box:
+                            m_BoxHandle.center = Quaternion.Inverse(tr.rotation) * tr.position;
+                            m_BoxHandle.size = prox.boxSize;
+                            EditorGUI.BeginChangeCheck();
+                            m_BoxHandle.DrawHull(true);
+                            m_BoxHandle.DrawHandle();
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                Undo.RecordObjects(new Object[] { tr, comp }, "Update Proxy Volume Size");
+                                tr.position = tr.rotation * m_BoxHandle.center;
+                                prox.boxSize = m_BoxHandle.size;
+                            }
+                            break;
+                        case ProxyShape.Sphere:
+                            m_SphereHandle.center = Quaternion.Inverse(tr.rotation) * tr.position;
+                            m_SphereHandle.radius = prox.sphereRadius;
+                            EditorGUI.BeginChangeCheck();
+                            m_SphereHandle.DrawHull(true);
+                            m_SphereHandle.DrawHandle();
+                            if (EditorGUI.EndChangeCheck())
+                            {
+                                Undo.RecordObjects(new Object[] { tr, comp }, "Update Proxy Volume Size");
+                                tr.position = tr.rotation * m_SphereHandle.center;
+                                prox.sphereRadius = m_SphereHandle.radius;
+                            }
+                            break;
+                        case ProxyShape.Infinite:
+                            break;
+                    }
                 }
             }
         }

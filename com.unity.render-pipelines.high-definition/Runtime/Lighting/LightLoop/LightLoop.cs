@@ -575,14 +575,10 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 
             // Setup shadow algorithms
             var shadowParams = hdAsset.renderPipelineSettings.hdShadowInitParams;
-            var punctualShadowKeywords = new[]{"PUNCTUAL_SHADOW_LOW", "PUNCTUAL_SHADOW_MEDIUM", "PUNCTUAL_SHADOW_HIGH"};
-            var directionalShadowKeywords = new[]{"DIRECTIONAL_SHADOW_LOW", "DIRECTIONAL_SHADOW_MEDIUM", "DIRECTIONAL_SHADOW_HIGH"};
-            foreach (var p in punctualShadowKeywords)
+            var shadowKeywords = new[]{"SHADOW_LOW", "SHADOW_MEDIUM", "SHADOW_HIGH"};
+            foreach (var p in shadowKeywords)
                 Shader.DisableKeyword(p);
-            foreach (var p in directionalShadowKeywords)
-                Shader.DisableKeyword(p);
-            Shader.EnableKeyword(punctualShadowKeywords[(int)shadowParams.punctualShadowQuality]);
-            Shader.EnableKeyword(directionalShadowKeywords[(int)shadowParams.directionalShadowQuality]);
+            Shader.EnableKeyword(shadowKeywords[(int)shadowParams.shadowQuality]);
 
             InitShadowSystem(hdAsset);
 
@@ -2407,6 +2403,8 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 
                 cmd.SetGlobalInt(HDShaderIDs._NumTileClusteredX, GetNumTileClusteredX(hdCamera));
                 cmd.SetGlobalInt(HDShaderIDs._NumTileClusteredY, GetNumTileClusteredY(hdCamera));
+
+                cmd.SetGlobalInt(HDShaderIDs._EnableSSRefraction, hdCamera.frameSettings.enableRoughRefraction ? 1 : 0);
 
                 if (m_FrameSettings.lightLoopSettings.enableBigTilePrepass)
                     cmd.SetGlobalBuffer(HDShaderIDs.g_vBigTileLightList, s_BigTileLightList);

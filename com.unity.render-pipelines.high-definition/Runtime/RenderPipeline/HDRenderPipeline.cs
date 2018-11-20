@@ -1307,10 +1307,13 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                         // Render pre refraction objects
                         RenderForward(cullingResults, hdCamera, renderContext, cmd, ForwardPass.PreRefraction);
 
-                        // First resolution of the color buffer for the color pyramid
-                        m_SharedRTManager.ResolveMSAAColor(cmd, hdCamera, m_CameraColorMSAABuffer, m_CameraColorBuffer);
+                        if (hdCamera.frameSettings.enableRoughRefraction)
+                        {
+                            // First resolution of the color buffer for the color pyramid
+                            m_SharedRTManager.ResolveMSAAColor(cmd, hdCamera, m_CameraColorMSAABuffer, m_CameraColorBuffer);
 
-                        RenderColorPyramid(hdCamera, cmd, true);
+                            RenderColorPyramid(hdCamera, cmd, true);
+                        }
 
                         // Render all type of transparent forward (unlit, lit, complex (hair...)) to keep the sorting between transparent objects.
                         RenderForward(cullingResults, hdCamera, renderContext, cmd, ForwardPass.Transparent);
@@ -1377,13 +1380,18 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                             renderContext.StereoEndRender(camera);
                     }
 
-                    // Copy depth buffer if render texture has one as our depth buffer can be bigger than the one provided and we use our RT handle system.
-                    // We need to copy only the corresponding portion
-                    // (it's handled automatically by the copy shader because it uses a load in pixel coordinates based on the target).
-                    // This copy will also have the effect of re-binding this depth buffer correctly for subsequent editor rendering (This allow to have correct Gizmo/Icons).
+                    // Due to our RT handle system we don't write into the backbuffer depth buffer (as our depth buffer can be bigger than the one provided)
+                    // So need to do a copy of the corresponding part of RT depth buffer in the target depth buffer in various situation:
+                    // - RenderTexture (camera.targetTexture != null) have a depth buffer (camera.targetTexture.depth != 0)
+                    // - We are the main game view (i.e not a RenderTexture camera.cameraType == CameraType.Game && hdCamera.camera.targetTexture == null) in the editor for allowing usage of Debug.DrawLine and Debug.Ray.
+                    // - We draw Gizmo/Icons in the editor (hdCamera.camera.targetTexture != null && camera.targetTexture.depth != 0 - The Scene view have a targetTexture and a depth texture)
                     // TODO: If at some point we get proper render target aliasing, we will be able to use the provided depth texture directly with our RT handle system
-                    bool copyDepth = hdCamera.camera.targetTexture != null ? hdCamera.camera.targetTexture.depth != 0 : false;
-
+                    // Note: Debug.DrawLine and Debug.Ray only work in editor, not in player
+                    bool copyDepth = (hdCamera.camera.targetTexture != null ? hdCamera.camera.targetTexture.depth != 0 : false);
+                    bool isMainGameView = (camera.cameraType == CameraType.Game && hdCamera.camera.targetTexture == null);
+#if UNITY_EDITOR
+                    copyDepth = copyDepth || isMainGameView; // Specific case of Debug.DrawLine and Debug.Ray
+#endif
                     // NOTE: This needs to be done before the call to RenderDebug because debug overlays need to update the depth for the scene view as well.
                     // Make sure RenderDebug does not change the current Render Target
                     if (copyDepth)
@@ -1391,6 +1399,8 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                         using (new ProfilingSample(cmd, "Copy Depth in Target Texture", CustomSamplerId.CopyDepth.GetSampler()))
                         {
                             m_CopyDepth.SetTexture(HDShaderIDs._InputDepth, m_SharedRTManager.GetDepthStencilBuffer());
+                            // When we are Main Game View we need to flip the depth buffer ourselves as we are after postprocess / blit that have already flip the screen
+                            m_CopyDepth.SetInt("_FlipY", isMainGameView ? 1 : 0);
                             cmd.Blit(null, BuiltinRenderTextureType.CameraTarget, m_CopyDepth);
                         }
                     }
@@ -1897,7 +1907,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 #if UNITY_2019_1_OR_NEWER
                 var pixelCoordToViewDirWS = HDUtils.ComputePixelCoordToWorldSpaceViewDirectionMatrix(hdCamera.camera.GetGateFittedFieldOfView() * Mathf.Deg2Rad, hdCamera.camera.GetGateFittedLensShift(), hdCamera.screenSize, hdCamera.viewMatrix, false);
 #else
-                var pixelCoordToViewDirWS = HDUtils.ComputePixelCoordToWorldSpaceViewDirectionMatrix(hdCamera.camera.fieldOfView * Mathf.Deg2Rad, hdCamera.screenSize, hdCamera.viewMatrix, false);
+                var pixelCoordToViewDirWS = HDUtils.ComputePixelCoordToWorldSpaceViewDirectionMatrix(hdCamera.camera.fieldOfView * Mathf.Deg2Rad, Vector2.zero, hdCamera.screenSize, hdCamera.viewMatrix, false);
 #endif
                 m_SkyManager.RenderOpaqueAtmosphericScattering(cmd, hdCamera, colorBuffer, depthBuffer, pixelCoordToViewDirWS, hdCamera.frameSettings.enableMSAA);
             }
@@ -1917,6 +1927,12 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             // The RenderForward pass will render the appropriate pass depends on the engine settings. In case of forward only rendering, both "Forward" pass and "ForwardOnly" pass
             // material will be render for both transparent and opaque. In case of deferred, both path are used for transparent but only "ForwardOnly" is use for opaque.
             // (Thus why "Forward" and "ForwardOnly" are exclusive, else they will render two times"
+
+            // If rough refraction are turned off, we render all transparents in the Transparent pass and we skip the PreRefraction one.
+            if (!hdCamera.frameSettings.enableRoughRefraction && pass == ForwardPass.PreRefraction)
+            {
+                return;
+            }
 
             if (m_CurrentDebugDisplaySettings.IsDebugDisplayEnabled())
             {
@@ -1977,7 +1993,12 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                         DecalSystem.instance.SetAtlas(cmd); // for clustered decals
                     }
 
-                    RenderTransparentRenderList(cullResults, hdCamera, renderContext, cmd, m_AllTransparentPassNames, m_currentRendererConfigurationBakedLighting, pass == ForwardPass.PreRefraction ? HDRenderQueue.k_RenderQueue_PreRefraction : HDRenderQueue.k_RenderQueue_Transparent);
+                    RenderQueueRange transparentRange = pass == ForwardPass.PreRefraction ? HDRenderQueue.k_RenderQueue_PreRefraction : HDRenderQueue.k_RenderQueue_Transparent;
+                    if(!hdCamera.frameSettings.enableRoughRefraction)
+                    {
+                        transparentRange = HDRenderQueue.k_RenderQueue_AllTransparent;
+                    }
+                    RenderTransparentRenderList(cullResults, hdCamera, renderContext, cmd, m_AllTransparentPassNames, m_currentRendererConfigurationBakedLighting, transparentRange);
                 }
             }
         }

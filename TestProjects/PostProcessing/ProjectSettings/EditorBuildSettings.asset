@@ -89,4 +89,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/0215_Std_ColorGrading_LDR_Mix.unity
     guid: 9a6bdb267705274419fa2589f4fd5579
+  - enabled: 1
+    path: Packages/com.unity.postprocessing/PostProcessing/Tests/Runtime/Scenes/0010_Volumes.unity
+    guid: b6de6fcae6b5eeb41b911dc48e77afbd
+  - enabled: 1
+    path: Packages/com.unity.postprocessing/PostProcessing/Tests/Runtime/Scenes/0011_Weight.unity
+    guid: 03eea41fac5e7e548b03e8f0b664afea
+  - enabled: 1
+    path: Packages/com.unity.postprocessing/PostProcessing/Tests/Runtime/Scenes/0012_Intersect.unity
+    guid: dbb9248285407184fba5a9d161940c78
+  - enabled: 1
+    path: Packages/com.unity.postprocessing/PostProcessing/Tests/Runtime/Scenes/0013_Priority.unity
+    guid: eb7b7c0a934ecad4599ec079e2371876
   m_configObjects: {}

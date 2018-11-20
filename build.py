@@ -5,6 +5,7 @@ import logging
 def packages_list():
     return [
         #ORDER IS IMPORTANT
+        ("com.unity.postprocessing", os.path.join("com.unity.postprocessing")),
         ("com.unity.shadergraph", os.path.join("com.unity.shadergraph")),
         ("com.unity.visualeffectgraph", os.path.join("com.unity.visualeffectgraph")),
         ("com.unity.render-pipelines.core", os.path.join("com.unity.render-pipelines.core")),

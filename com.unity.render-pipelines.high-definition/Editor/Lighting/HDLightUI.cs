@@ -136,11 +136,11 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                             CED.Conditional((serialized, owner) => GetAdvanced(Advanceable.Shadow, serialized, owner) && k_ExpandedState[Expandable.ShadowMap],
                                 CED.Group(GroupOption.Indent, DrawShadowMapAdvancedContent)),
                             CED.space,
-                            CED.Conditional((serialized, owner) => IsShadowSettings(HDShadowQuality.High, serialized, owner),
+                            CED.Conditional((serialized, owner) => HasShadowQualitySettingsUI(HDShadowQuality.High, serialized, owner),
                                 CED.FoldoutGroup(s_Styles.highShadowQualitySubHeader, Expandable.ShadowQuality, k_ExpandedState, FoldoutOption.SubFoldout | FoldoutOption.Indent, DrawHighShadowSettingsContent)),
-                            CED.Conditional((serialized, owner) => IsShadowSettings(HDShadowQuality.Medium, serialized, owner),
+                            CED.Conditional((serialized, owner) => HasShadowQualitySettingsUI(HDShadowQuality.Medium, serialized, owner),
                                 CED.FoldoutGroup(s_Styles.mediumShadowQualitySubHeader, Expandable.ShadowQuality, k_ExpandedState, FoldoutOption.SubFoldout | FoldoutOption.Indent, DrawMediumShadowSettingsContent)),
-                            CED.Conditional((serialized, owner) => IsShadowSettings(HDShadowQuality.Low, serialized, owner),
+                            CED.Conditional((serialized, owner) => HasShadowQualitySettingsUI(HDShadowQuality.Low, serialized, owner),
                                 CED.FoldoutGroup(s_Styles.lowShadowQualitySubHeader, Expandable.ShadowQuality, k_ExpandedState, FoldoutOption.SubFoldout | FoldoutOption.Indent, DrawLowShadowSettingsContent)),
                             CED.FoldoutGroup(s_Styles.contactShadowsSubHeader, Expandable.ContactShadow, k_ExpandedState, FoldoutOption.SubFoldout | FoldoutOption.Indent | FoldoutOption.NoSpaceAtEnd, DrawContactShadowsContent),
                             CED.Conditional((serialized, owner) => serialized.settings.isBakedOrMixed || serialized.settings.isCompletelyBaked,
@@ -605,8 +605,9 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                     break;
             }
         }
-        
-        static bool IsShadowSettings(HDShadowQuality quality, SerializedHDLight serialized, Editor owner)
+
+
+        static bool HasShadowQualitySettingsUI(HDShadowQuality quality, SerializedHDLight serialized, Editor owner)
         {
             // Handle quality where there is nothing to draw directly here
             // No PCSS for now with directional light

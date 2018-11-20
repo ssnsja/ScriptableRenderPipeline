@@ -197,6 +197,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                     Assert.IsTrue(File.Exists(cacheFile));
 
                     var bakedTexturePath = HDBakingUtilities.GetBakedTextureFilePath(probe);
+                    HDBakingUtilities.CreateParentDirectoryIfMissing(bakedTexturePath);
                     File.Copy(cacheFile, bakedTexturePath, true);
                 }
                 // AssetPipeline bug

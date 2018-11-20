@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEditor;
-using UnityEditor.Graphing;
+using UnityEditor.ShaderGraph;
  using UnityEngine;
  using UnityEngine.TestTools;
 

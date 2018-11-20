@@ -328,7 +328,7 @@ namespace UnityEditor.ShaderGraph.Drawing
                     uberShaderHasError = GenerateUberShader(errNodes, out results);
                     if (uberShaderHasError)
                     {
-                        Debug.LogError("Shader Graph compilation failed due to multiple errors.");
+                        Debug.LogWarning("Shader Graph compilation failed due to multiple errors. Resolve the visible errors to reveal more.");
                     }
 
                     foreach (var errNode in errNodes)

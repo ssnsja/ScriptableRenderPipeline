@@ -374,9 +374,7 @@ namespace UnityEditor.ShaderGraph.Drawing
             foreach (var messageData in m_MessageManager.GetNodeMessages())
             {
                 var node = m_Graph.GetNodeFromTempId(messageData.Key);
-                Debug.Assert(node != null);
-                if (node == null)
-                    continue;
+
                 if (!(m_GraphView.GetNodeByGuid(node.guid.ToString()) is MaterialNodeView nodeView))
                     continue;
 

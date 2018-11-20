@@ -24,7 +24,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
             const CameraSettingsFields volumesFields = CameraSettingsFields.volumesAnchorOverride
                 | CameraSettingsFields.volumesLayerMask;
             const CameraSettingsFields cullingFields = CameraSettingsFields.cullingCullingMask
-                | CameraSettingsFields.cullingInvertCulling
+                | CameraSettingsFields.cullingInvertFaceCulling
                 | CameraSettingsFields.cullingUseOcclusionCulling;
             const CameraSettingsFields frustumFields = CameraSettingsFields.frustumAspect
                 | CameraSettingsFields.frustumFarClipPlane
@@ -62,7 +62,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
             {
                 PropertyFieldWithFlagToggleIfDisplayed(CameraSettingsFields.cullingUseOcclusionCulling, d.cullingUseOcclusionCulling, _.GetContent("Use Occlusion Culling"), @override.camera, displayedFields.camera, overridableFields.camera);
                 PropertyFieldWithFlagToggleIfDisplayed(CameraSettingsFields.cullingCullingMask, d.cullingCullingMask, _.GetContent("Culling Mask"), @override.camera, displayedFields.camera, overridableFields.camera);
-                PropertyFieldWithFlagToggleIfDisplayed(CameraSettingsFields.cullingInvertCulling, d.cullingCullingMask, _.GetContent("Invert Backface Culling"), @override.camera, displayedFields.camera, overridableFields.camera);
+                PropertyFieldWithFlagToggleIfDisplayed(CameraSettingsFields.cullingInvertFaceCulling, d.cullingCullingMask, _.GetContent("Invert Backface Culling"), @override.camera, displayedFields.camera, overridableFields.camera);
                 EditorGUILayout.Space();
             }
 

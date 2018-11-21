@@ -41,7 +41,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline.Tests
                 ref cameraSettings, ref cameraPosition
             );
 
-            Assert.AreEqual(true, cameraSettings.culling.invertCulling);
+            Assert.AreEqual(true, cameraSettings.invertFaceCulling);
         }
     }
 }

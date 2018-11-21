@@ -80,19 +80,19 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             }
 
             // Frame Settings Overrides
-            var sourceFrameSettings = new FrameSettings();
             var hd = (HDRenderPipeline)RenderPipelineManager.currentPipeline;
             switch (settings.mode)
             {
+                default:
                 case ProbeSettings.Mode.Realtime:
-                    sourceFrameSettings = hd.asset.GetRealtimeReflectionFrameSettings();
+                    cameraSettings.frameSettings = hd.asset.GetRealtimeReflectionFrameSettings();
                     break;
                 case ProbeSettings.Mode.Baked:
                 case ProbeSettings.Mode.Custom:
-                    sourceFrameSettings = hd.asset.GetBakedOrCustomReflectionFrameSettings();
+                    cameraSettings.frameSettings = hd.asset.GetBakedOrCustomReflectionFrameSettings();
                     break;
             }
-            cameraSettings.frameSettings = cameraSettings.frameSettings.NewWithOverrides(sourceFrameSettings);
+            cameraSettings.frameSettings.ApplyOverrideOn(cameraSettings.frameSettings);
         }
 
         internal static void ApplyMirroredReferenceTransform(

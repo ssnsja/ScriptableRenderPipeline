@@ -307,7 +307,7 @@ namespace UnityEngine.Experimental.Rendering
             where TValue : struct
             where TGetter : struct, IKeyGetter<TValue, TKey>
         {
-            var getter = new TGetter();
+            var getter = default(TGetter);
             var pivotvalue = UnsafeUtility.ReadArrayElement<TValue>(data, left);
             var pivot = getter.Get(ref pivotvalue);
 

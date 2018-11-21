@@ -140,14 +140,10 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             if (m_frameSettingsIsDirty || assetFrameSettingsIsDirty)
             {
                 // We do a copy of the settings to those effectively used
-                if (renderingPath == RenderingPath.UseGraphicsSettings)
-                {
-                    defaultFrameSettings.CopyTo(m_FrameSettingsRuntime);
-                }
-                else
-                {
-                    m_FrameSettings.NewWithOverrides(defaultFrameSettings).CopyTo(m_FrameSettingsRuntime);
-                }
+                defaultFrameSettings.CopyTo(m_FrameSettingsRuntime);
+
+                if (renderingPath == RenderingPath.Custom)
+                    m_FrameSettings.ApplyOverrideOn(m_FrameSettingsRuntime);
 
                 m_frameSettingsIsDirty = false;
             }

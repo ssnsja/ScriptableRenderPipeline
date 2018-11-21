@@ -2763,5 +2763,14 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                 s_lightVolumes.RenderLightVolumes(cmd, hdCamera, cullResults, lightingDebug);
             }
         }
+
+        void AOTExplicitCompilation()
+        {
+            var g = new CoreUnsafeUtils.DefaultKeyGetter<uint>();
+            var v = 0u;
+            g.Get(ref v);
+
+            throw new Exception("Only for AOT compilation, don't call in runtime.");
+        }
     }
 }

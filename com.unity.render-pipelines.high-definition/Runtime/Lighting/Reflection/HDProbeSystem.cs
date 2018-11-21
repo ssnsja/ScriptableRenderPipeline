@@ -17,12 +17,13 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         public static void UnregisterProbe(HDProbe probe) => s_Instance.UnregisterProbe(probe);
 
         public static void RenderAndUpdateRealtimeRenderDataIfRequired(
-            IEnumerable<HDProbe> probes,
+            IList<HDProbe> probes,
             Transform viewerTransform
         )
         {
-            foreach (var probe in probes)
+            for (int i = 0; i < probes.Count; ++i)
             {
+                var probe = probes[i];
                 if (DoesRealtimeProbeNeedToBeUpdated(probe))
                 {
                     RenderAndUpdateRealtimeRenderData(probe, viewerTransform);
@@ -163,6 +164,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         int m_PlanarProbeCount = 0;
         PlanarReflectionProbe[] m_PlanarProbes = new PlanarReflectionProbe[32];
         BoundingSphere[] m_PlanarProbeBounds = new BoundingSphere[32];
+        CullingGroup m_PlanarProbeCullingGroup = new CullingGroup();
 
         public IList<HDProbe> bakedProbes
         { get { RemoveDestroyedProbes(m_BakedProbes); return m_BakedProbes; } }
@@ -237,14 +239,11 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         {
             RemoveDestroyedProbes(m_PlanarProbes, m_PlanarProbeBounds, ref m_PlanarProbeCount);
 
-            var cullingGroup = new CullingGroup
-            {
-                targetCamera = camera
-            };
-            cullingGroup.SetBoundingSpheres(m_PlanarProbeBounds);
-            cullingGroup.SetBoundingSphereCount(m_PlanarProbeCount);
+            m_PlanarProbeCullingGroup.targetCamera = camera;
+            m_PlanarProbeCullingGroup.SetBoundingSpheres(m_PlanarProbeBounds);
+            m_PlanarProbeCullingGroup.SetBoundingSphereCount(m_PlanarProbeCount);
 
-            results.PrepareCull(cullingGroup, m_PlanarProbes);
+            results.PrepareCull(m_PlanarProbeCullingGroup, m_PlanarProbes);
         }
 
         static void RemoveDestroyedProbes(List<HDProbe> probes)

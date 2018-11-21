@@ -100,7 +100,6 @@ namespace UnityEngine.Experimental.Rendering.LWRP
         }
 
         List<IBeforeRender> m_BeforeRenderPasses = new List<IBeforeRender>(10);
-        List<IAfterDepthPrePass> m_AfterDepthpasses = new List<IAfterDepthPrePass>(10);
         List<IAfterOpaquePass> m_AfterOpaquePasses = new List<IAfterOpaquePass>(10);
         List<IAfterOpaquePostProcess> m_AfterOpaquePostProcessPasses = new List<IAfterOpaquePostProcess>(10);
         List<IAfterSkyboxPass> m_AfterSkyboxPasses = new List<IAfterSkyboxPass>(10);
@@ -143,7 +142,6 @@ namespace UnityEngine.Experimental.Rendering.LWRP
             renderer.EnqueuePass(m_SetupForwardRenderingPass);
 
             camera.GetComponents(m_BeforeRenderPasses);
-            camera.GetComponents(m_AfterDepthpasses);
             camera.GetComponents(m_AfterOpaquePasses);
             camera.GetComponents(m_AfterOpaquePostProcessPasses);
             camera.GetComponents(m_AfterSkyboxPasses);
@@ -152,7 +150,6 @@ namespace UnityEngine.Experimental.Rendering.LWRP
 
             bool requiresRenderToTexture = RequiresIntermediateColorTexture(ref renderingData.cameraData, baseDescriptor)
                     || m_BeforeRenderPasses.Count != 0
-                    || m_AfterDepthpasses.Count != 0
                     || m_AfterOpaquePasses.Count != 0
                     || m_AfterOpaquePostProcessPasses.Count != 0
                     || m_AfterSkyboxPasses.Count != 0
@@ -179,9 +176,6 @@ namespace UnityEngine.Experimental.Rendering.LWRP
             {
                 m_DepthOnlyPass.Setup(baseDescriptor, m_DepthTexture, SampleCount.One);
                 renderer.EnqueuePass(m_DepthOnlyPass);
-
-                foreach (var pass in m_AfterDepthpasses)
-                    renderer.EnqueuePass(pass.GetPassToEnqueue(m_DepthOnlyPass.descriptor, m_DepthTexture));
             }
 
             if (resolveShadowsInScreenSpace)

@@ -57,11 +57,11 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
             public static string[] opaqueDownsamplingOptions = {"None", "2x (Bilinear)", "4x (Box)", "4x (Bilinear)"};
         }
 
-        LightweightRenderPipelineEditorUtils.SavedBool m_GeneralSettingsFoldout;
-        LightweightRenderPipelineEditorUtils.SavedBool m_QualitySettingsFoldout;
-        LightweightRenderPipelineEditorUtils.SavedBool m_LightingSettingsFoldout;
-        LightweightRenderPipelineEditorUtils.SavedBool m_ShadowSettingsFoldout;
-        LightweightRenderPipelineEditorUtils.SavedBool m_AdvancedSettingsFoldout;
+        SavedBool m_GeneralSettingsFoldout;
+        SavedBool m_QualitySettingsFoldout;
+        SavedBool m_LightingSettingsFoldout;
+        SavedBool m_ShadowSettingsFoldout;
+        SavedBool m_AdvancedSettingsFoldout;
 
         SerializedProperty m_RequireDepthTextureProp;
         SerializedProperty m_RequireOpaqueTextureProp;
@@ -112,11 +112,11 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
 
         void OnEnable()
         {
-            m_GeneralSettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.GeneralSettingsFoldout", false);
-            m_QualitySettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.QualitySettingsFoldout", false);
-            m_LightingSettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.LightingSettingsFoldout", false);
-            m_ShadowSettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.ShadowSettingsFoldout", false);
-            m_AdvancedSettingsFoldout = new LightweightRenderPipelineEditorUtils.SavedBool($"{target.GetType()}.AdvancedSettingsFoldout", false);
+            m_GeneralSettingsFoldout = new SavedBool($"{target.GetType()}.GeneralSettingsFoldout", false);
+            m_QualitySettingsFoldout = new SavedBool($"{target.GetType()}.QualitySettingsFoldout", false);
+            m_LightingSettingsFoldout = new SavedBool($"{target.GetType()}.LightingSettingsFoldout", false);
+            m_ShadowSettingsFoldout = new SavedBool($"{target.GetType()}.ShadowSettingsFoldout", false);
+            m_AdvancedSettingsFoldout = new SavedBool($"{target.GetType()}.AdvancedSettingsFoldout", false);
 
             m_RequireDepthTextureProp = serializedObject.FindProperty("m_RequireDepthTexture");
             m_RequireOpaqueTextureProp = serializedObject.FindProperty("m_RequireOpaqueTexture");

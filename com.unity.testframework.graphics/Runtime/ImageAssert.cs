@@ -55,6 +55,7 @@ namespace UnityEngine.TestTools.Graphics
             {
                 foreach (var camera in cameras)
                 {
+                    camera.stereoTargetEye = StereoTargetEyeMask.Both;
                     camera.targetTexture = rt;
                     camera.Render();
                     camera.targetTexture = null;

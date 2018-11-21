@@ -26,7 +26,7 @@ public class LWGraphicsTestsXR
         Assert.IsNotNull(settings, "Invalid test scene, couldn't find LWGraphicsTestSettingsXR");
 
         for (int i = 0; i < settings.WaitFrames; i++)
-            yield return null;
+            yield return new WaitForEndOfFrame();
 
         ImageAssert.AreEqual(testCase.ReferenceImage, cameras.Where(x=>x != null), settings.ImageComparisonSettings);
     }

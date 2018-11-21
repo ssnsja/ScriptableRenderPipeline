@@ -88,11 +88,9 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         )
         {
             var result = new ProbeCapturePositionSettings();
-            var proxyTransform = probe.proxyVolume != null
-                ? probe.proxyVolume.transform
-                : probe.transform;
-            result.proxyPosition = proxyTransform.position;
-            result.proxyRotation = proxyTransform.rotation;
+            var proxyToWorld = probe.proxyToWorld;
+            result.proxyPosition = proxyToWorld.GetColumn(3);
+            result.proxyRotation = proxyToWorld.rotation;
             result.referencePosition = referencePosition;
             result.referenceRotation = referenceRotation;
             return result;

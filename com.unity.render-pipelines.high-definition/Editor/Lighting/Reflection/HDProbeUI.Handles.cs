@@ -28,9 +28,6 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 case EditMirrorPosition:
                     {
                         var proxyToWorldMatrix = probe.proxyToWorld;
-                        // Set scale to 1
-                        proxyToWorldMatrix.m00 = 1.0f;
-                        proxyToWorldMatrix.m11 = 1.0f;
 
                         SerializedProperty target;
                         switch (EditMode.editMode)
@@ -40,14 +37,11 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                             default: throw new ArgumentOutOfRangeException();
                         }
 
-                        using (new Handles.DrawingScope(proxyToWorldMatrix))
-                        {
-                            var position = target.vector3Value;
-                            EditorGUI.BeginChangeCheck();
-                            position = Handles.PositionHandle(position, Quaternion.identity);
-                            if (EditorGUI.EndChangeCheck())
-                                target.vector3Value = position;
-                        }
+                        var position = proxyToWorldMatrix.MultiplyPoint(target.vector3Value);
+                        EditorGUI.BeginChangeCheck();
+                        position = Handles.PositionHandle(position, proxyToWorldMatrix.rotation);
+                        if (EditorGUI.EndChangeCheck())
+                            target.vector3Value = proxyToWorldMatrix.inverse.MultiplyPoint(position);
                         break;
                     }
                 case EditMirrorRotation:

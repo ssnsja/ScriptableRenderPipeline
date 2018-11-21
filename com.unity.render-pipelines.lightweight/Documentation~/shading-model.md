@@ -30,9 +30,9 @@ These LWRP shaders use Physically Based Shading:
 
 - [Lit](#lit-shader.md)
 
-- TerrainLit
+- Terrain Lit
 
-- ParticlesLit
+- Particles Lit
 
 
 **Note:** This shading model is not suitable for low-end mobile hardware. If you’re targeting this hardware, use shaders with a [Simple Shading](#simple-shading) model.
@@ -58,7 +58,6 @@ The Baked Lit shading model doesn’t have real-time lighting. Objects can recei
 
 [img showing unlit objects]
 
-These LWRP shaders use Baked Lit shading:
+This LWRP shader uses Baked Lit shading:
 
 - Baked Lit
-- Particles Baked Lit

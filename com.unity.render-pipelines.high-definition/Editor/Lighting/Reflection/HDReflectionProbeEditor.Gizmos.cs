@@ -49,12 +49,15 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
             var ray = new Ray(capturePosition, Vector3.down);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Handles.color = Color.green;
+                var c = InfluenceVolumeUI.k_GizmoThemeColorBase;
+                c.a = 0.8f;
+                Handles.color = c;
                 Handles.zTest = UnityEngine.Rendering.CompareFunction.LessEqual;
                 Handles.DrawLine(capturePosition - Vector3.up * 0.5f, hit.point);
                 Handles.DrawWireDisc(hit.point, hit.normal, 0.5f);
 
-                Handles.color = Color.red;
+                c.a = 0.25f;
+                Handles.color = c;
                 Handles.zTest = UnityEngine.Rendering.CompareFunction.Greater;
                 Handles.DrawLine(capturePosition, hit.point);
                 Handles.DrawWireDisc(hit.point, hit.normal, 0.5f);

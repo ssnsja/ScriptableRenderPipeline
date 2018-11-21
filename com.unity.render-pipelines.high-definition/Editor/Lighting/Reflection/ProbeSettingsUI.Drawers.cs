@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
-
+using UnityEngine.Rendering;
 using static UnityEditor.Experimental.Rendering.HDPipeline.HDEditorUtils;
 
 namespace UnityEditor.Experimental.Rendering.HDPipeline
@@ -24,9 +24,14 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 | ProbeSettingsFields.proxyMirrorRotationProxySpace
                 | ProbeSettingsFields.proxyUseInfluenceVolumeAsProxyVolume;
 
+            if (!(RenderPipelineManager.currentPipeline is HDRenderPipeline hd))
+                return;
+
             if ((displayedFields.probe & lighting) != 0)
             {
+                GUI.enabled = hd.renderPipelineSettings.supportLightLayers;
                 PropertyFieldWithFlagToggleIfDisplayed(ProbeSettingsFields.lightingLightLayer, d.lightingLightLayer, _.GetContent("Light Layer"), @override.probe, displayedFields.probe, overridableFields.probe);
+                GUI.enabled = true;
                 PropertyFieldWithFlagToggleIfDisplayed(ProbeSettingsFields.lightingMultiplier, d.lightingMultiplier, _.GetContent("Multiplier"), @override.probe, displayedFields.probe, overridableFields.probe);
                 PropertyFieldWithFlagToggleIfDisplayed(ProbeSettingsFields.lightingWeight, d.lightingWeight, _.GetContent("Weight"), @override.probe, displayedFields.probe, overridableFields.probe);
                 EditorGUILayout.Space();

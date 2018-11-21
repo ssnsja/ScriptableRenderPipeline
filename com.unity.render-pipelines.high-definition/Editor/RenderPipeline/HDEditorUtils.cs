@@ -97,7 +97,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
             EditorGUIUtility.labelWidth = 0;
 
             if (showOverrideButton)
-                GUI.enabled = FlagToggle(v, @override);
+                GUI.enabled = GUI.enabled && FlagToggle(v, @override);
             else
                 ReserveAndGetFlagToggleRect();
             (drawer ?? k_DefaultDrawer)(property, label);

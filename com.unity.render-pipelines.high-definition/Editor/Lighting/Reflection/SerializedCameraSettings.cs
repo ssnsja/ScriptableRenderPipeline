@@ -39,7 +39,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
         internal SerializedProperty frustumProjectionMatrix;
         internal SerializedProperty cullingUseOcclusionCulling;
         internal SerializedProperty cullingCullingMask;
-        internal SerializedProperty cullingInvertCulling;
+        internal SerializedProperty cullingInvertFaceCulling;
         internal SerializedProperty renderingPath;
         internal SerializedProperty flipYMode;
 
@@ -65,7 +65,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
             frustumProjectionMatrix = root.FindPropertyRelative("frustum.projectionMatrix");
             cullingUseOcclusionCulling = root.FindPropertyRelative("culling.useOcclusionCulling");
             cullingCullingMask = root.FindPropertyRelative("culling.cullingMask");
-            cullingInvertCulling = root.FindPropertyRelative("culling.invertCulling");
+            cullingInvertFaceCulling = root.FindPropertyRelative("invertFaceCulling");
             renderingPath = root.FindPropertyRelative("renderingPath");
             flipYMode = root.FindPropertyRelative("flipYMode");
         }

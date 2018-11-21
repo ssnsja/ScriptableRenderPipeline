@@ -241,7 +241,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 camera = (CameraSettingsFields)(-1) & ~(
                    CameraSettingsFields.flipYMode
                    | CameraSettingsFields.frustumAspect
-                   | CameraSettingsFields.cullingInvertCulling
+                   | CameraSettingsFields.cullingInvertFaceCulling
                    | CameraSettingsFields.frustumMode
                    | CameraSettingsFields.frustumProjectionMatrix
                )

@@ -6,6 +6,9 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
 {
     partial class InfluenceVolumeUI
     {
+        static HierarchicalSphere s_SphereHandle = new HierarchicalSphere(k_GizmoThemeColorBase);
+        static HierarchicalBox s_BoxHandle = new HierarchicalBox(k_GizmoThemeColorBase);
+
         [Flags]
         public enum HandleType
         {
@@ -25,11 +28,20 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
 
             if ((showedHandle & HandleType.Base) != 0)
             {
-                Gizmos.color = k_GizmoThemeColorBase;
                 switch (d.shape)
                 {
-                    case InfluenceShape.Box: Gizmos.DrawWireCube(Vector3.zero, d.boxSize); break;
-                    case InfluenceShape.Sphere: Gizmos.DrawWireSphere(Vector3.zero, d.sphereRadius); break;
+                    case InfluenceShape.Box:
+                        s_BoxHandle.baseColor = k_GizmoThemeColorBase;
+                        s_BoxHandle.center = Vector3.zero;
+                        s_BoxHandle.size = d.boxSize;
+                        s_BoxHandle.DrawHull(false);
+                        break;
+                    case InfluenceShape.Sphere:
+                        s_SphereHandle.baseColor = k_GizmoThemeColorBase;
+                        s_SphereHandle.center = Vector3.zero;
+                        s_SphereHandle.radius = d.sphereRadius;
+                        s_SphereHandle.DrawHull(false);
+                        break;
                 }
             }
 
@@ -38,18 +50,37 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 Gizmos.color = k_GizmoThemeColorInfluence;
                 switch (d.shape)
                 {
-                    case InfluenceShape.Box: Gizmos.DrawWireCube(d.boxBlendOffset, d.boxSize + d.boxBlendSize); break;
-                    case InfluenceShape.Sphere: Gizmos.DrawWireSphere(Vector3.zero, d.sphereRadius - d.sphereBlendDistance); break;
+                    case InfluenceShape.Box:
+                        s_BoxHandle.baseColor = k_GizmoThemeColorInfluence;
+                        s_BoxHandle.center = d.boxBlendOffset;
+                        s_BoxHandle.size = d.boxSize + d.boxBlendSize;
+                        s_BoxHandle.DrawHull(false);
+                        break;
+                    case InfluenceShape.Sphere:
+                        s_SphereHandle.baseColor = k_GizmoThemeColorInfluence;
+                        s_SphereHandle.center = Vector3.zero;
+                        s_SphereHandle.radius = d.sphereRadius - d.sphereBlendDistance;
+                        s_SphereHandle.DrawHull(false);
+                        break;
                 }
             }
 
             if ((showedHandle & HandleType.InfluenceNormal) != 0)
             {
-                Gizmos.color = k_GizmoThemeColorInfluenceNormal;
                 switch (d.shape)
                 {
-                    case InfluenceShape.Box: Gizmos.DrawWireCube(d.boxBlendNormalOffset, d.boxSize + d.boxBlendNormalSize); break;
-                    case InfluenceShape.Sphere: Gizmos.DrawWireSphere(Vector3.zero, d.sphereRadius - d.sphereBlendNormalDistance); break;
+                    case InfluenceShape.Box:
+                        s_BoxHandle.baseColor = k_GizmoThemeColorInfluenceNormal;
+                        s_BoxHandle.center = d.boxBlendNormalOffset;
+                        s_BoxHandle.size = d.boxSize + d.boxBlendNormalSize;
+                        s_BoxHandle.DrawHull(false);
+                        break;
+                    case InfluenceShape.Sphere:
+                        s_SphereHandle.baseColor = k_GizmoThemeColorInfluenceNormal;
+                        s_SphereHandle.center = Vector3.zero;
+                        s_SphereHandle.radius = d.sphereRadius - d.sphereBlendNormalDistance;
+                        s_SphereHandle.DrawHull(false);
+                        break;
                 }
             }
 

@@ -77,7 +77,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                     CameraSettingsFields.frustumFieldOfView
                     | CameraSettingsFields.frustumAspect
                     | CameraSettingsFields.flipYMode
-                    | CameraSettingsFields.cullingInvertCulling
+                    | CameraSettingsFields.cullingInvertFaceCulling
                     | CameraSettingsFields.frustumMode
                     | CameraSettingsFields.frustumProjectionMatrix
                 )

@@ -23,7 +23,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         frustumProjectionMatrix = 1 << 13,
         cullingUseOcclusionCulling = 1 << 14,
         cullingCullingMask = 1 << 15,
-        cullingInvertCulling = 1 << 16,
+        cullingInvertFaceCulling = 1 << 16,
         renderingPath = 1 << 17,
         flipYMode = 1 << 18,
         frameSettings = 1 << 19
@@ -171,16 +171,13 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             public static readonly Culling @default = new Culling
             {
                 cullingMask = -1,
-                useOcclusionCulling = true,
-                invertCulling = false
+                useOcclusionCulling = true
             };
 
             /// <summary>True when occlusion culling will be performed during rendering, false otherwise.</summary>
             public bool useOcclusionCulling;
             /// <summary>The mask for visible objects.</summary>
             public int cullingMask;
-            /// <summary>True to invert face culling, false otherwise.</summary>
-            public bool invertCulling;
         }
 
         /// <summary>Default value.</summary>
@@ -194,7 +191,8 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             postProcessLayer = null,
             renderingPath = HDAdditionalCameraData.RenderingPath.UseGraphicsSettings,
             volumes = Volumes.@default,
-            flipYMode = HDAdditionalCameraData.FlipYMode.Automatic
+            flipYMode = HDAdditionalCameraData.FlipYMode.Automatic,
+            invertFaceCulling = false
         };
 
         /// <summary>Rendering path to use.</summary>
@@ -213,6 +211,8 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         public Frustum frustum;
         /// <summary>Culling settings to use.</summary>
         public Culling culling;
+        /// <summary>True to invert face culling, false otherwise.</summary>
+        public bool invertFaceCulling;
         public HDAdditionalCameraData.FlipYMode flipYMode;
     }
 }

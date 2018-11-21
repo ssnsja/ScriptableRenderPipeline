@@ -179,19 +179,19 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             switch (settings.mode)
             {
                 case ProbeSettings.Mode.Baked:
-                    Assert.IsFalse(m_BakedProbes.Contains(probe));
-                    m_BakedProbes.Add(probe);
+                    if (!m_BakedProbes.Contains(probe))
+                        m_BakedProbes.Add(probe);
                     break;
                 case ProbeSettings.Mode.Realtime:
                     switch (settings.type)
                     {
                         case ProbeSettings.ProbeType.PlanarProbe:
-                            Assert.IsFalse(m_RealtimeViewDependentProbes.Contains(probe));
-                            m_RealtimeViewDependentProbes.Add(probe);
+                            if (!m_RealtimeViewDependentProbes.Contains(probe))
+                                m_RealtimeViewDependentProbes.Add(probe);
                             break;
                         case ProbeSettings.ProbeType.ReflectionProbe:
-                            Assert.IsFalse(m_RealtimeViewIndependentProbes.Contains(probe));
-                            m_RealtimeViewIndependentProbes.Add(probe);
+                            if (!m_RealtimeViewIndependentProbes.Contains(probe))
+                                m_RealtimeViewIndependentProbes.Add(probe);
                             break;
                     }
                     break;

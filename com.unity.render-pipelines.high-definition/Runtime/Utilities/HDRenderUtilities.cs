@@ -89,7 +89,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                 camera.ApplySettings(settings);
                 camera.ApplySettings(position);
 
-                GL.invertCulling = settings.culling.invertCulling;
+                GL.invertCulling = settings.invertFaceCulling;
                 switch (target.dimension)
                 {
                     case TextureDimension.Tex2D:

@@ -114,7 +114,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             var reflectionMatrix = GeometryUtils.CalculateReflectionMatrix(mirrorPosition, mirrorForward);
             cameraPosition.worldToCameraMatrix = worldToCameraRHS * reflectionMatrix;
             // We must invert the culling because we performed a plane reflection
-            cameraSettings.culling.invertCulling = true;
+            cameraSettings.invertFaceCulling = true;
 
             // Calculate capture position and rotation
             cameraPosition.position = reflectionMatrix.MultiplyPoint(probePosition.referencePosition);

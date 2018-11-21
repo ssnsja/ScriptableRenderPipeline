@@ -58,10 +58,18 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             if (!AreAllOpenedSceneSaved())
                 return false;
 
-            DeleteUnusedCubemapAssets();
+            DeleteCubemapAssets(true);
             var bakedProbes = HDProbeSystem.bakedProbes;
 
             return BakeProbes(bakedProbes);
+        }
+
+        public override void Clear()
+        {
+            if (!AreAllOpenedSceneSaved())
+                return;
+
+            DeleteCubemapAssets(false);
         }
 
         public override void Tick(
@@ -89,7 +97,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             var sceneObjectsHash = sceneStateHash.sceneObjectsHash;
             var skySettingsHash = sceneStateHash.skySettingsHash;
 
-            DeleteUnusedCubemapAssets();
+            DeleteCubemapAssets(true);
 
             // Explanation of the algorithm:
             // 1. First we create the hash of the world that can impact the reflection probes.
@@ -197,6 +205,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                     Assert.IsTrue(File.Exists(cacheFile));
 
                     var bakedTexturePath = HDBakingUtilities.GetBakedTextureFilePath(probe);
+                    HDBakingUtilities.CreateParentDirectoryIfMissing(bakedTexturePath);
                     File.Copy(cacheFile, bakedTexturePath, true);
                 }
                 // AssetPipeline bug
@@ -353,8 +362,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             return true;
         }
 
-        // Look in all baked files if some of them are not used anymore
-        void DeleteUnusedCubemapAssets()
+        void DeleteCubemapAssets(bool deleteUnusedOnly)
         {
             var gameObjects = new List<GameObject>();
             var indices = new List<int>();
@@ -392,9 +400,11 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                         ))
                             continue;
 
-                        // This file is a baked asset for a destroyed game object
-                        // We can destroy it
-                        if (!indicesSet.Contains(fileIndex))
+                            // This file is a baked asset for a destroyed game object
+                            // We can destroy it
+                        if (!indicesSet.Contains(fileIndex) && deleteUnusedOnly
+                            // Or we delete all assets
+                            || !deleteUnusedOnly)
                         {
                             if (!buffer.TryPush(files[fileI]))
                                 DeleteAllAssetsIn(ref buffer);

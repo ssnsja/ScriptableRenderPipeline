@@ -177,7 +177,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             /// <summary>True when occlusion culling will be performed during rendering, false otherwise.</summary>
             public bool useOcclusionCulling;
             /// <summary>The mask for visible objects.</summary>
-            public int cullingMask;
+            public LayerMask cullingMask;
         }
 
         /// <summary>Default value.</summary>

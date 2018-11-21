@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fixed Debug.DrawLine and Debug.Ray call to work in game view
+- Fixed DebugMenu's enum resetted on change.
 
 ### Changed
 - Rename "Regular" in Diffusion profile UI "Thick Object"

@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [5.1.0-preview] - 2018-10-30
 ### Added
 - You can now show and hide the Main Preview and the Blackboard from the toolbar.
+- Hovering over properties in the blackboard will now highlight the properties if the properties have been placed in the graph. This also works the other way around.
 
 ### Changed
 - Moved `NormalBlendRNM` node to a dropdown option on `Normal Blend` node.

@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [5.1.0] - 2018-11-19
 ### Added
 - The user documentation for LWRP is now in this GitHub repo, instead of in the separate GitHub wiki. You can find the most up-to-date pages in the [TableOfContents.md](TableOfCotents.md) file. Pages not listed in that file are still in progress.
+- You can now inject a custom render pass before rendering opaques. To do so, implement an `IBeforeRender` interface.
+
+### Changed
+- Removed `IBeforeCameraRender` interface. Use `IBeforeRender` instead.
+- Removed `IAfterDepthPrePass` interface.
 
 ### Fixed
 - LWRP now respects the iOS Player setting **Force hard shadows**. When you enable this setting, hardware filtering of shadows is disabled.

@@ -16,7 +16,12 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             {
 #pragma warning disable 618
                 p.m_ProbeSettings.proxySettings.useInfluenceVolumeAsProxyVolume = !p.m_ObsoleteInfiniteProjection;
-                p.m_ProbeSettings.influence = p.m_ObsoleteInfluenceVolume;
+                p.m_ProbeSettings.influence = new InfluenceVolume();
+                if (p.m_ObsoleteInfluenceVolume != null)
+                    // We must create a copy here, otherwise the serialization will write the same memory destination
+                    //   for both property p.m_ObsoleteInfluenceVolume and p.m_ProbeSettings.influence
+                    p.m_ObsoleteInfluenceVolume.CopyTo(p.m_ProbeSettings.influence);
+
                 p.m_ProbeSettings.camera.frameSettings = p.m_ObsoleteFrameSettings;
                 p.m_ProbeSettings.lighting.multiplier = p.m_ObsoleteMultiplier;
                 p.m_ProbeSettings.lighting.weight = p.m_ObsoleteWeight;

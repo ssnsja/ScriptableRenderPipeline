@@ -15,7 +15,6 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
         List<GUIContent> m_SkyClassNames = null;
         List<GUIContent> m_FogNames = null;
         List<int> m_SkyUniqueIDs = null;
-        List<int> m_FogUniqueIDs = null;
 
         public static readonly string[] fogNames = Enum.GetNames(typeof(FogType));
         public static readonly int[] fogValues = Enum.GetValues(typeof(FogType)) as int[];

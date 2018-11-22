@@ -1,21 +1,31 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine.Assertions;
+using UnityEditor;
 using UnityEngine.Rendering;
 
 namespace UnityEngine.Experimental.Rendering.HDPipeline
 {
     internal static class HDProbeSystem
     {
-        static HDProbeSystemInternal s_Instance = new HDProbeSystemInternal();
+        static HDProbeSystemInternal s_Instance;
+
+        static HDProbeSystem()
+        {
+            s_Instance = new HDProbeSystemInternal();
+            AssemblyReloadEvents.beforeAssemblyReload += DisposeStaticInstance;
+        }
+
+        // Don't set the reference to null
+        // Only dispose resources
+        static void DisposeStaticInstance() => s_Instance.Dispose();
 
         public static IList<HDProbe> realtimeViewDependentProbes => s_Instance.realtimeViewDependentProbes;
         public static IList<HDProbe> realtimeViewIndependentProbes => s_Instance.realtimeViewIndependentProbes;
         public static IList<HDProbe> bakedProbes => s_Instance.bakedProbes;
-
+    
         public static void RegisterProbe(HDProbe probe) => s_Instance.RegisterProbe(probe);
         public static void UnregisterProbe(HDProbe probe) => s_Instance.UnregisterProbe(probe);
-
+         
         public static void RenderAndUpdateRealtimeRenderDataIfRequired(
             IList<HDProbe> probes,
             Transform viewerTransform
@@ -156,7 +166,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         }
     }
 
-    class HDProbeSystemInternal
+    class HDProbeSystemInternal : IDisposable
     {
         List<HDProbe> m_BakedProbes = new List<HDProbe>();
         List<HDProbe> m_RealtimeViewDependentProbes = new List<HDProbe>();
@@ -237,6 +247,11 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 
         internal void PrepareCull(Camera camera, ReflectionProbeCullResults results)
         {
+            // Can happens right before a domain reload
+            // The CullingGroup is disposed at that point 
+            if (m_PlanarProbeCullingGroup == null)
+                return;
+
             RemoveDestroyedProbes(m_PlanarProbes, m_PlanarProbeBounds, ref m_PlanarProbeCount);
 
             m_PlanarProbeCullingGroup.targetCamera = camera;
@@ -267,6 +282,12 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                     --count;
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            m_PlanarProbeCullingGroup.Dispose();
+            m_PlanarProbeCullingGroup = null;
         }
     }
 }

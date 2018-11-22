@@ -102,11 +102,9 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
                 case CameraClearFlags.SolidColor:
                 default:
                     return RenderBufferLoadAction.DontCare;
-                    break;
                 case CameraClearFlags.Depth:
                 case CameraClearFlags.Nothing:
                     return RenderBufferLoadAction.Load;
-                    break;
             }
         }
 
@@ -119,10 +117,8 @@ namespace UnityEngine.Experimental.Rendering.LightweightPipeline
                 case CameraClearFlags.Depth:
                 default:
                     return RenderBufferLoadAction.DontCare;
-                    break;
                 case CameraClearFlags.Nothing:
                     return RenderBufferLoadAction.Load;
-                    break;
             }
         }
     }

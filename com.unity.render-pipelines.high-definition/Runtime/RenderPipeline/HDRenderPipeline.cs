@@ -138,6 +138,11 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                                                         HDShaderPassNames.s_ForwardName,
                                                         HDShaderPassNames.s_SRPDefaultUnlitName };
 
+        ShaderTagId[] m_TransparentNoBackfaceNames = {  HDShaderPassNames.s_ForwardOnlyName,
+                                                        HDShaderPassNames.s_ForwardName,
+                                                        HDShaderPassNames.s_SRPDefaultUnlitName };
+
+
         ShaderTagId[] m_AllForwardOpaquePassNames = {    HDShaderPassNames.s_ForwardOnlyName,
                                                             HDShaderPassNames.s_ForwardName,
                                                             HDShaderPassNames.s_SRPDefaultUnlitName };
@@ -1386,6 +1391,11 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                         // Second resolve the color buffer for finishing the frame
                         m_SharedRTManager.ResolveMSAAColor(cmd, hdCamera, m_CameraColorMSAABuffer, m_CameraColorBuffer);
 
+#if UNITY_EDITOR
+                        // Render gizmos that should be affected by post processes
+                        RenderGizmos(cmd, camera, renderContext, GizmoSubset.PreImageEffects);
+#endif
+
                         // Render All forward error
                         RenderForwardError(cullingResults, hdCamera, renderContext, cmd);
 
@@ -1407,7 +1417,6 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                         // Postprocess system (that doesn't use cmd.Blit) handle it with configuration (and do not flip in SceneView) or it is automatically done in Blit
 
                         StartStereoRendering(cmd, renderContext, camera);
-
 
                         // Final blit
                         if (hdCamera.frameSettings.enablePostprocess)
@@ -1476,6 +1485,9 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
 #if UNITY_EDITOR
                     // We need to make sure the viewport is correctly set for the editor rendering. It might have been changed by debug overlay rendering just before.
                     cmd.SetViewport(new Rect(0.0f, 0.0f, hdCamera.actualWidth, hdCamera.actualHeight));
+
+                    // Render overlay Gizmos
+                    RenderGizmos(cmd, camera, renderContext, GizmoSubset.PostImageEffects);
 #endif
                 }
 
@@ -1485,11 +1497,26 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                 CommandBufferPool.Release(cmd);
                 renderContext.Submit();
 
-#if UNITY_EDITOR
-                UnityEditor.Handles.DrawGizmos(camera);
-#endif
-
             } // For each camera
+        }
+
+        void RenderGizmos(CommandBuffer cmd, Camera camera, ScriptableRenderContext renderContext, GizmoSubset gizmoSubset)
+        {
+#if UNITY_EDITOR
+            if (UnityEditor.Handles.ShouldRenderGizmos())
+            {
+                bool renderPrePostprocessGizmos = (gizmoSubset == GizmoSubset.PreImageEffects);
+
+                using (new ProfilingSample(cmd, 
+                    renderPrePostprocessGizmos ? "PrePostprocessGizmos" : "Gizmos", 
+                    renderPrePostprocessGizmos ? CustomSamplerId.GizmosPrePostprocess.GetSampler() : CustomSamplerId.Gizmos.GetSampler()))
+                {
+                    renderContext.ExecuteCommandBuffer(cmd);
+                    cmd.Clear();
+                    renderContext.DrawGizmos(camera, gizmoSubset);
+                }
+            }
+#endif
         }
 
         void RenderOpaqueRenderList(CullingResults cull,
@@ -2063,7 +2090,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                     {
                         transparentRange = HDRenderQueue.k_RenderQueue_AllTransparent;
                     }
-                    RenderTransparentRenderList(cullResults, hdCamera, renderContext, cmd, m_AllTransparentPassNames, m_currentRendererConfigurationBakedLighting, transparentRange);
+                    RenderTransparentRenderList(cullResults, hdCamera, renderContext, cmd,  m_Asset.renderPipelineSettings.supportTransparentBackface ? m_AllTransparentPassNames : m_TransparentNoBackfaceNames, m_currentRendererConfigurationBakedLighting, transparentRange);
                 }
             }
         }

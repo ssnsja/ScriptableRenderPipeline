@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [5.1.0-preview] - 2018-10-30
 ### Added
 - You can now show and hide the Main Preview and the Blackboard from the toolbar.
-- Hovering over properties in the blackboard will now highlight the properties if the properties have been placed in the graph. This also works the other way around.
+- When you hover your cursor over a property in the blackboard, this now highlights the corresponding property elements in your Shader Graph. Similarly, if you hover over a property in the Shader Graph itself, this highlights the corresponding property in the blackboard.
 
 ### Changed
 - Moved `NormalBlendRNM` node to a dropdown option on `Normal Blend` node.

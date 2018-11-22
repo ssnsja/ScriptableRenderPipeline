@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added option to run Contact Shadows and Volumetrics Voxelization stage in Async Compute
 - Added camera freeze debug mode - Allow to visually see culling result for a camera
+- Added support of Gizmo rendering before and after postprocess in Editor
 
 ### Fixed
 - Fixed Debug.DrawLine and Debug.Ray call to work in game view

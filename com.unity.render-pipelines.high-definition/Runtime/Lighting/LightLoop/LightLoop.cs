@@ -1904,6 +1904,9 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
                         if (probeIndex < cullResults.visibleReflectionProbes.Length)
                         {
                             var probe = cullResults.visibleReflectionProbes[probeIndex];
+                            if (probe.reflectionProbe == null || probe.reflectionProbe.Equals(null))
+                                continue;
+
                             var additional = probe.reflectionProbe.GetComponent<HDAdditionalReflectionData>();
 
                             // probe.texture can be null when we are adding a reflection probe in the editor

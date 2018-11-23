@@ -71,10 +71,12 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
             HDProbeUI s, SerializedPlanarReflectionProbe d, Editor o
         )
         {
+            var isReferencePositionRelevant = d.probeSettings.mode.intValue != (int)ProbeSettings.Mode.Realtime;
+            if (!isReferencePositionRelevant)
+                return;
+
             ++EditorGUI.indentLevel;
-            GUI.enabled = d.probeSettings.mode.intValue != (int)ProbeSettings.Mode.Realtime;
             EditorGUILayout.PropertyField(d.localReferencePosition, _.GetContent("Reference Local Position"));
-            GUI.enabled = true;
             --EditorGUI.indentLevel;
         }
 

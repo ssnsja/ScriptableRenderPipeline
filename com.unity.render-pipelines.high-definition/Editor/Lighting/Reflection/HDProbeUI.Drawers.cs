@@ -1,3 +1,4 @@
+//#define ENABLE_BAKED_PLANAR
 using System;
 using System.Collections.Generic;
 using UnityEditorInternal;
@@ -155,6 +156,15 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
 
                 var provider = new TProvider();
 
+#if !ENABLE_BAKED_PLANAR
+                if (p is SerializedPlanarReflectionProbe)
+                {
+                    p.probeSettings.mode.intValue = (int)ProbeSettings.Mode.Realtime;
+                }
+                else
+                { 
+#endif
+
                 // Probe Mode
                 EditorGUI.BeginChangeCheck();
                 EditorGUI.showMixedValue = p.probeSettings.mode.hasMultipleDifferentValues;
@@ -163,7 +173,11 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 if (EditorGUI.EndChangeCheck())
                     s.SetModeTarget(p.probeSettings.mode.intValue);
 
-                switch ((ProbeSettings.Mode)p.probeSettings.mode.intValue)
+#if !ENABLE_BAKED_PLANAR
+                }
+#endif
+
+                    switch ((ProbeSettings.Mode)p.probeSettings.mode.intValue)
                 {
                     case ProbeSettings.Mode.Realtime:
                         {

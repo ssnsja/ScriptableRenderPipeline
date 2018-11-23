@@ -10,7 +10,7 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         Vector3 m_LocalReferencePosition = -Vector3.forward;
 
         /// <summary>Reference position to mirror to find the capture point. (local space)</summary>
-        public Vector3 localReferencePosition => m_LocalReferencePosition;
+        public Vector3 localReferencePosition { get => m_LocalReferencePosition; set => m_LocalReferencePosition = value; }
         /// <summary>Reference position to mirror to find the capture point. (world space)</summary>
         public Vector3 referencePosition => transform.TransformPoint(m_LocalReferencePosition);
 

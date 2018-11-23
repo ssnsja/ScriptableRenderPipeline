@@ -47,9 +47,6 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 case EditMirrorRotation:
                     {
                         var proxyToWorldMatrix = probe.proxyToWorld;
-                        // Set scale to 1
-                        proxyToWorldMatrix.m00 = 1.0f;
-                        proxyToWorldMatrix.m11 = 1.0f;
 
                         var target = d.probeSettings.proxyMirrorRotationProxySpace;
                         var position = d.probeSettings.proxyMirrorPositionProxySpace.vector3Value;

@@ -7,26 +7,23 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
     public enum CameraSettingsFields
     {
         none = 0,
-        physicalAperture = 1 << 0,
-        physicalShutterSpeed = 1 << 1,
-        physicalIso = 1 << 2,
-        bufferClearColorMode = 1 << 3,
-        bufferClearBackgroundColorHDR = 1 << 4,
-        bufferClearClearDepth = 1 << 5,
-        volumesLayerMask = 1 << 6,
-        volumesAnchorOverride = 1 << 7,
-        frustumMode = 1 << 8,
-        frustumAspect = 1 << 9,
-        frustumFarClipPlane = 1 << 10,
-        frustumNearClipPlane = 1 << 11,
-        frustumFieldOfView = 1 << 12,
-        frustumProjectionMatrix = 1 << 13,
-        cullingUseOcclusionCulling = 1 << 14,
-        cullingCullingMask = 1 << 15,
-        cullingInvertFaceCulling = 1 << 16,
-        renderingPath = 1 << 17,
-        flipYMode = 1 << 18,
-        frameSettings = 1 << 19
+        bufferClearColorMode = 1 << 1,
+        bufferClearBackgroundColorHDR = 1 << 2,
+        bufferClearClearDepth = 1 << 3,
+        volumesLayerMask = 1 << 4,
+        volumesAnchorOverride = 1 << 5,
+        frustumMode = 1 << 6,
+        frustumAspect = 1 << 7,
+        frustumFarClipPlane = 1 << 8,
+        frustumNearClipPlane = 1 << 9,
+        frustumFieldOfView = 1 << 10,
+        frustumProjectionMatrix = 1 << 11,
+        cullingUseOcclusionCulling = 1 << 12,
+        cullingCullingMask = 1 << 13,
+        cullingInvertFaceCulling = 1 << 14,
+        renderingPath = 1 << 15,
+        flipYMode = 1 << 16,
+        frameSettings = 1 << 17
     }
 
     [Serializable]
@@ -39,26 +36,6 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
     [Serializable]
     public struct CameraSettings
     {
-        /// <summary>Physical camera settings, this will impact exposure of the rendered image.</summary>
-        [Serializable]
-        public struct Physical
-        {
-            /// <summary>Default value.</summary>
-            public static readonly Physical @default = new Physical
-            {
-                aperture = 8,
-                iso = 400,
-                shutterSpeed = 1.0f / 200
-            };
-
-            /// <summary>Aperture size of the camera.</summary>
-            public float aperture;
-            /// <summary>Shutter speed of the camera.</summary>
-            public float shutterSpeed;
-            /// <summary>ISO of the camera.</summary>
-            public float iso;
-        }
-
         /// <summary>Defines how color and depth buffers are cleared.</summary>
         [Serializable]
         public struct BufferClearing
@@ -187,7 +164,6 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             culling = Culling.@default,
             frameSettings = new FrameSettings(),
             frustum = Frustum.@default,
-            physical = Physical.@default,
             postProcessLayer = null,
             renderingPath = HDAdditionalCameraData.RenderingPath.UseGraphicsSettings,
             volumes = Volumes.@default,
@@ -201,8 +177,6 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
         public FrameSettings frameSettings;
         /// <summary>Post process layer to use.</summary>
         public PostProcessLayer postProcessLayer;
-        /// <summary>Physical settings to use.</summary>
-        public Physical physical;
         /// <summary>Buffer clearing settings to use.</summary>
         public BufferClearing bufferClearing;
         /// <summary>Volumes settings to use.</summary>

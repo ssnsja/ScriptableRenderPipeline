@@ -15,9 +15,6 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
             CameraSettingsOverride displayedFields, CameraSettingsOverride overridableFields
         )
         {
-            const CameraSettingsFields physicalFields = CameraSettingsFields.physicalAperture
-                | CameraSettingsFields.physicalIso
-                | CameraSettingsFields.physicalShutterSpeed;
             const CameraSettingsFields bufferFields = CameraSettingsFields.bufferClearBackgroundColorHDR
                 | CameraSettingsFields.bufferClearClearDepth
                 | CameraSettingsFields.bufferClearColorMode;
@@ -34,14 +31,6 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 | CameraSettingsFields.frustumFieldOfView;
             const CameraSettingsFields frustumFarOrNearPlane = CameraSettingsFields.frustumFarClipPlane
                 | CameraSettingsFields.frustumNearClipPlane;
-
-            if ((displayedFields.camera & physicalFields) != 0)
-            {
-                PropertyFieldWithFlagToggleIfDisplayed(CameraSettingsFields.physicalAperture, d.physicalAperture, _.GetContent("Aperture"), @override.camera, displayedFields.camera, overridableFields.camera);
-                PropertyFieldWithFlagToggleIfDisplayed(CameraSettingsFields.physicalIso, d.physicalIso, _.GetContent("ISO"), @override.camera, displayedFields.camera, overridableFields.camera);
-                PropertyFieldWithFlagToggleIfDisplayed(CameraSettingsFields.physicalShutterSpeed, d.physicalShutterSpeed, _.GetContent("Shutter Speed"), @override.camera, displayedFields.camera, overridableFields.camera);
-                EditorGUILayout.Space();
-            }
 
             if ((displayedFields.camera & bufferFields) != 0)
             {

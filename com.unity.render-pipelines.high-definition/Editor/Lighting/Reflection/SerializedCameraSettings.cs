@@ -23,9 +23,6 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
 
         internal SerializedFrameSettings frameSettings;
 
-        internal SerializedProperty physicalAperture;
-        internal SerializedProperty physicalShutterSpeed;
-        internal SerializedProperty physicalIso;
         internal SerializedProperty bufferClearColorMode;
         internal SerializedProperty bufferClearBackgroundColorHDR;
         internal SerializedProperty bufferClearClearDepth;
@@ -49,9 +46,6 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
 
             frameSettings = new SerializedFrameSettings(root.Find((CameraSettings s) => s.frameSettings));
 
-            physicalAperture = root.FindPropertyRelative("physical.aperture");
-            physicalShutterSpeed = root.FindPropertyRelative("physical.shutterSpeed");
-            physicalIso = root.FindPropertyRelative("physical.iso");
             bufferClearColorMode = root.FindPropertyRelative("bufferClearing.clearColorMode");
             bufferClearBackgroundColorHDR = root.FindPropertyRelative("bufferClearing.backgroundColorHDR");
             bufferClearClearDepth = root.FindPropertyRelative("bufferClearing.clearDepth");

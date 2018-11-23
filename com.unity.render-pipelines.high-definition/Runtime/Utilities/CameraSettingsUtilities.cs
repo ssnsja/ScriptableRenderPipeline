@@ -33,10 +33,6 @@ namespace UnityEngine.Experimental.Rendering.HDPipeline
             // Volumes
             add.volumeLayerMask = settings.volumes.layerMask;
             add.volumeAnchorOverride = settings.volumes.anchorOverride;
-            // Physical Parameters
-            add.aperture = settings.physical.aperture;
-            add.shutterSpeed = settings.physical.shutterSpeed;
-            add.iso = settings.physical.iso;
             // HD Specific
             add.renderingPath = settings.renderingPath;
             add.flipYMode = settings.flipYMode;

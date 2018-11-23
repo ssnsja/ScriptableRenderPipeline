@@ -49,25 +49,37 @@ namespace UnityEngine.TestTools.Graphics
             int height = settings.TargetHeight;
             var format = expected != null ? expected.format : TextureFormat.ARGB32;
 
+            int dummyRenderedFrameCount = 1;
+
             var rt = RenderTexture.GetTemporary(width, height, 24);
             Texture2D actual = null;
             try
             {
-                foreach (var camera in cameras)
+                for (int i=0;i< dummyRenderedFrameCount+1;i++)        // x frame delay + the last one is the one really tested ( ie 5 frames delay means 6 frames are rendered )
                 {
-                    camera.targetTexture = rt;
-                    camera.Render();
-                    camera.targetTexture = null;
+                    foreach (var camera in cameras)
+                    {
+                        camera.targetTexture = rt;
+//                        Rendering.GraphicsSettings.RenderDocFrameCaptureStart();
+                        camera.Render();
+//                        Rendering.GraphicsSettings.RenderDocFrameCaptureEnd();
+                        camera.targetTexture = null;
+                    }
+
+					// only proceed the test on the last renderered frame
+					if (dummyRenderedFrameCount == i)
+					{
+						actual = new Texture2D(width, height, format, false);
+						RenderTexture.active = rt;
+						actual.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+						RenderTexture.active = null;
+
+						actual.Apply();
+
+						AreEqual(expected, actual, settings);
+					}
                 }
 
-                actual = new Texture2D(width, height, format, false);
-                RenderTexture.active = rt;
-                actual.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-                RenderTexture.active = null;
-
-                actual.Apply();
-
-                AreEqual(expected, actual, settings);
             }
             finally
             {

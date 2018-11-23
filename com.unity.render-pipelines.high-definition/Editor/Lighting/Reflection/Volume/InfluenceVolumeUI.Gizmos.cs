@@ -22,9 +22,8 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
 
         public static void DrawGizmos(InfluenceVolumeUI s, InfluenceVolume d, Matrix4x4 matrix, HandleType editedHandle, HandleType showedHandle)
         {
-            var mat = Gizmos.matrix;
-            var c = Gizmos.color;
-            Gizmos.matrix = matrix;
+            var mat = Handles.matrix;
+            Handles.matrix = matrix;
 
             if ((showedHandle & HandleType.Base) != 0)
             {
@@ -47,7 +46,6 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
 
             if ((showedHandle & HandleType.Influence) != 0)
             {
-                Gizmos.color = k_GizmoThemeColorInfluence;
                 switch (d.shape)
                 {
                     case InfluenceShape.Box:
@@ -84,8 +82,7 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
                 }
             }
 
-            Gizmos.matrix = mat;
-            Gizmos.color = c;
+            Handles.matrix = mat;
         }
     }
 }

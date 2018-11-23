@@ -74,7 +74,7 @@ namespace UnityEditor.Experimental.Rendering
 
         enum NamedFace { Right, Top, Front, Left, Bottom, Back, None }
 
-        readonly Material m_Material;
+        Material m_Material;
         readonly Color[] m_PolychromeHandleColor;
         readonly HierarchicalBox m_Parent;
         Color m_MonochromeHandleColor;
@@ -82,6 +82,10 @@ namespace UnityEditor.Experimental.Rendering
         Color m_WireframeColorBehind;
         int[] m_ControlIDs = new int[6] { 0, 0, 0, 0, 0, 0 };
         bool m_MonoHandle = true;
+
+        Material material => m_Material == null || m_Material.Equals(null)
+            ? (m_Material = new Material(k_Material))
+            : m_Material;
 
         /// <summary>
         /// Allow to switch between the mode where all axis are controlled together or not
@@ -98,11 +102,11 @@ namespace UnityEditor.Experimental.Rendering
         /// <summary>The baseColor used to fill hull. All other colors are deduced from it except specific handle colors.</summary>
         public Color baseColor
         {
-            get { return m_Material.color; }
+            get { return material.color; }
             set
             {
                 value.a = 8f / 255;
-                m_Material.color = value;
+                material.color = value;
                 value.a = 1f;
                 m_MonochromeHandleColor = value;
                 value.a = 0.7f;
@@ -168,7 +172,7 @@ namespace UnityEditor.Experimental.Rendering
             {
                 // Draw the hull
                 var xSize = new Vector3(size.z, size.y, 1f);
-                m_Material.SetPass(0);
+                material.SetPass(0);
                 Graphics.DrawMeshNow(k_MeshQuad, Handles.matrix * Matrix4x4.TRS(center + size.x * .5f * Vector3.left, Quaternion.FromToRotation(Vector3.forward, Vector3.left), xSize));
                 Graphics.DrawMeshNow(k_MeshQuad, Handles.matrix * Matrix4x4.TRS(center + size.x * .5f * Vector3.right, Quaternion.FromToRotation(Vector3.forward, Vector3.right), xSize));
 

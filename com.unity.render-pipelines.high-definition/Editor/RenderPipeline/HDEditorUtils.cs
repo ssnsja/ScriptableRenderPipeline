@@ -157,12 +157,9 @@ namespace UnityEditor.Experimental.Rendering.HDPipeline
             return () =>
             {
                 var bounds = new Bounds();
-                foreach (Component targetObject in o.targets)
-                {
-                    var rp = targetObject.transform;
-                    var b = rp.position;
-                    bounds.Encapsulate(b);
-                }
+                var rp = ((Component)o.target).transform;
+                var b = rp.position;
+                bounds.Encapsulate(b);
                 return bounds;
             };
         }
